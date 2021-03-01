@@ -368,5 +368,10 @@
         "name": "SPIDER_CURL",
         "picture": "",
         "bodyPart": "biceps"
+    },
+    "WRIST_CURL": {
+        "name": "WRIST CURL",
+        "picture": "",
+        "bodyPart": "forearms"
     }
 }
