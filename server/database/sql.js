@@ -10,6 +10,8 @@ const selectFitnessSchema = 'use fitness;';
 
 const getExercisesNames = 'select name from exercises;';
 
+const createExerciseProgressTable = 'create table exercise_progress(id int not null unique auto_increment, user_exercise_id int, sets int, reps int, weight int, date datetime);'
+
 const insertUser = (userEmail) => {
     return `insert into users (email) values ('${userEmail}')`;
 };
@@ -31,5 +33,6 @@ module.exports = {
     insertUser,
     getUserByEmail,
     selectFitnessSchema,
-    getExercisesNames
+    getExercisesNames,
+    createExerciseProgressTable
 };

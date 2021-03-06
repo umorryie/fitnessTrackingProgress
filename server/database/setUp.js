@@ -1,6 +1,7 @@
 const fs = require('fs');
 const connection = require('./connection');
 const {
+    createExerciseProgressTable,
     createUserExerciseTable,
     createExerciseTable,
     createUserTable,
@@ -33,6 +34,11 @@ const setUpTables = async (dbConnection) => {
             }
         });
         await dbConnection.query(createUserExerciseTable, (error, result) => {
+            if (error) {
+                console.log(error)
+            }
+        });
+        await dbConnection.query(createExerciseProgressTable, (error, result) => {
             if (error) {
                 console.log(error)
             }
