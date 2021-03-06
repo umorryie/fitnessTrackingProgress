@@ -13,14 +13,14 @@ const getUser = (req, res) => {
     });
 }
 
-const postUser = async (req, res) => {
+const postUser = (req, res) => {
     const {userEmail} = req.body;
-    connection.query(insertUser(userEmail), (error, user) => {
+    connection.query(insertUser(userEmail), (error, response) => {
         if (error) {
             console.log(`Error inserting user ${userEmail} with error: ${error}`);
             res.status(404).json({error})
         } else {
-            res.status(200).json(user)
+            res.status(200).json(response)
         }
     });
 }

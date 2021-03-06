@@ -8,6 +8,8 @@ const createUserExerciseTable = `create table users_exercises(id int not null un
 
 const selectFitnessSchema = 'use fitness;';
 
+const getExercisesNames = 'select name from exercises;';
+
 const insertUser = (userEmail) => {
     return `insert into users (email) values ('${userEmail}')`;
 };
@@ -28,5 +30,6 @@ module.exports = {
     insertExercise,
     insertUser,
     getUserByEmail,
-    selectFitnessSchema
+    selectFitnessSchema,
+    getExercisesNames
 };
