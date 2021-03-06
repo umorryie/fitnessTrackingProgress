@@ -1,23 +1,32 @@
-const createSchema = `CREATE SCHEMA TRACKINGPROGRESS`;
+const createSchema = `create schema fitness`;
 
-const createUserTable = `CREATE TABLE USERS(ID int NOT NULL UNIQUE AUTO_INCREMENT, EMAIL VARCHAR(255) UNIQUE, PRIMARY KEY (ID))`;
+const createUserTable = `create table users(id int not null unique auto_increment, email varchar(255) unique, primary key (id))`;
 
-const createExerciseTable = `CREATE TABLE EXERCISES(ID int NOT NULL UNIQUE AUTO_INCREMENT, NAME VARCHAR(255) UNIQUE, PRIMARY KEY (ID))`;
+const createExerciseTable = `create table exercises(id int not null unique auto_increment, name varchar(255) unique, primary key (id))`;
 
-const createUserExerciseTable = `CREATE TABLE USERS_EXERCISES(ID int NOT NULL UNIQUE AUTO_INCREMENT, EMAIL VARCHAR(255), PRIMARY KEY (ID), EXERCISE_ID int)`;
+const createUserExerciseTable = `create table users_exercises(id int not null unique auto_increment, email varchar(255), primary key (id), exercise_id int)`;
+
+const selectFitnessSchema = 'use fitness;';
 
 const insertUser = (userEmail) => {
-    return `INSERT INTO USERS (EMAIL) VALUES('${userEmail}')`;
+    return `insert into users (email) values ('${userEmail}')`;
 };
 
 const insertExercise = (exercise) => {
-    return `INSERT INTO EXERCISES (NAME) VALUES('${exercise}')`;
+    return `insert into exercises (name) values ('${exercise}')`;
 }
+
+const getUserByEmail = (userEmail) => {
+    return `select * from users where email = '${userEmail}'`;
+};
+
 module.exports = {
     createUserExerciseTable,
     createExerciseTable,
     createUserTable,
     createSchema,
     insertExercise,
-    insertUser
+    insertUser,
+    getUserByEmail,
+    selectFitnessSchema
 };

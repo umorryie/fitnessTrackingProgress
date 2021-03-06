@@ -1,6 +1,13 @@
 const fs = require('fs');
-const {createConnection, disconnectConnection} = require('./connection');
-const {createUserExerciseTable, createExerciseTable, createUserTable, insertExercise} = require('./sql');
+const connection = require('./connection');
+const {
+    createUserExerciseTable,
+    createExerciseTable,
+    createUserTable,
+    insertExercise,
+    createSchema,
+    selectFitnessSchema
+} = require('./sql');
 
 const getExercises = () => {
     const exercises = fs.readFileSync('../exercises.json');
@@ -10,9 +17,26 @@ const getExercises = () => {
 
 const setUpTables = async (dbConnection) => {
     try {
-        await dbConnection.query(createUserTable);
-        await dbConnection.query(createExerciseTable);
-        await dbConnection.query(createUserExerciseTable);
+        await dbConnection.query(selectFitnessSchema, (error, result) => {
+            if (error) {
+                console.log(error)
+            }
+        });
+        await dbConnection.query(createUserTable, (error, result) => {
+            if (error) {
+                console.log(error)
+            }
+        });
+        await dbConnection.query(createExerciseTable, (error, result) => {
+            if (error) {
+                console.log(error)
+            }
+        });
+        await dbConnection.query(createUserExerciseTable, (error, result) => {
+            if (error) {
+                console.log(error)
+            }
+        });
     } catch (error) {
         console.log(`Setting up tables error: ${error}`)
         return error;
@@ -32,19 +56,36 @@ const setUpExercises = async (dbConnection) => {
     }
 }
 
-const setUpDataBase = async () => {
+const setUpDataBase = async (dbConnection) => {
     try {
-        const connection = await createConnection();
-        await setUpTables(connection);
-        await setUpExercises(connection);
-        await disconnectConnection(connection);
+        await setUpTables(dbConnection);
+        await setUpExercises(dbConnection);
     } catch (error) {
         console.log(`Setting up database error: ${error}`)
         return error;
     }
 }
 
-module.exports = {
-    setUpDataBase
+const createFitnessSchema = (dbConnection) => {
+    dbConnection.query(createSchema, (error, result) => {
+        if (error) {
+            console.log(error)
+        }
+    });
 }
-setUpDataBase()
+
+/*
+** STEPS TO CREATE DATABASE:
+** 1) create schema in database with connection where database is not defined
+**  
+** EXAMPLE: createFitnessSchema(connection);
+**
+** 2) add database to connection and create tables
+**
+** EXAMPLE: setUpDataBase(connection);
+**
+*/
+
+
+// createFitnessSchema(connection);
+// setUpDataBase(connection);
