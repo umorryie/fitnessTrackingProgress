@@ -4,6 +4,11 @@
         "picture": "",
         "bodyPart": "shoulders"
     },
+    "FLAT_BENCH_PRESS": {
+        "name": "FLAT_BENCH_PRESS",
+        "picture": "",
+        "bodyPart": "chest"
+    },
     "BACK_EXTENSION": {
         "name": "BACK_EXTENSION",
         "picture": "",
@@ -14,8 +19,8 @@
         "picture": "",
         "bodyPart": "chest"
     },
-    "BICEP_CURL": {
-        "name": "BICEP_CURL",
+    "BICEPS_CURL": {
+        "name": "BICEPS_CURL",
         "picture": "",
         "bodyPart": "biceps"
     },
@@ -373,5 +378,10 @@
         "name": "WRIST CURL",
         "picture": "",
         "bodyPart": "forearms"
+    },
+    "HAMMER_CURL": {
+        "name": "HAMMER_CURL",
+        "picture": "",
+        "bodyPart": "biceps"
     }
 }

@@ -53,7 +53,7 @@ const setUpExercises = async (dbConnection) => {
     try {
         const exercises = getExercises();
         for (let index = 0; index < exercises.length; index++) {
-            const exerciseName = exercises[index];
+            const exerciseName = exercises[index].toLowerCase();
             await dbConnection.query(insertExercise(exerciseName));
         }
     } catch (error) {
