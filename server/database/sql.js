@@ -29,7 +29,7 @@ const createUserExerciseTable = `
 
 const selectFitnessSchema = 'use fitness;';
 
-const getExercisesNames = 'select name from exercises;';
+const getExercisesNames = 'select name, is_custom_exercise as isCustomExercise from exercises;';
 
 const createExerciseProgressTable = `
     create table exercise_progress(

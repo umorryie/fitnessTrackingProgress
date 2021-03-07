@@ -7,7 +7,13 @@ const getExercises = (req, res) => {
             console.log(`Error retrieving user with error: ${error}`);
             res.status(404).json({error})
         } else {
-            const exercisesArray = exercises.map(exercise => exercise.name);
+            const exercisesArray = exercises.map(exercise => {
+                let exerciseObject = {
+                    name: exercise.name,
+                    isCustomExercise: exercise.isCustomExercise == 0 ? false : true
+                }
+                return exerciseObject;
+            });
             res.status(200).json(exercisesArray);
         }
     });
