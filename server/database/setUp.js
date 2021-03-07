@@ -54,7 +54,7 @@ const setUpExercises = async (dbConnection) => {
         const exercises = getExercises();
         for (let index = 0; index < exercises.length; index++) {
             const exerciseName = exercises[index].toLowerCase();
-            await dbConnection.query(insertExercise(exerciseName));
+            await dbConnection.query(insertExercise(exerciseName, false));
         }
     } catch (error) {
         console.log(`Setting up exercises error: ${error}`)

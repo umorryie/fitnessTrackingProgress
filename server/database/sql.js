@@ -15,7 +15,8 @@ const createExerciseTable = `
     create table exercises(
         id int not null unique auto_increment,
         name varchar(255) unique,
-        primary key (id)
+        primary key (id),
+        is_custom_exercise boolean
     )`;
 
 const createUserExerciseTable = `
@@ -45,8 +46,8 @@ const insertUser = (userEmail) => {
     return `insert into users (email) values ('${userEmail}')`;
 };
 
-const insertExercise = (exercise) => {
-    return `insert into exercises (name) values ('${exercise}')`;
+const insertExercise = (exercise, isCustomExercise) => {
+    return `insert into exercises (name, is_custom_exercise) values ('${exercise}', ${isCustomExercise})`;
 }
 
 const getUserByEmail = (userEmail) => {
