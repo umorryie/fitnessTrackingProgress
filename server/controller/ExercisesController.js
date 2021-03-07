@@ -1,4 +1,4 @@
-const {getExercisesNames} = require('../database/sql');
+const {getExercisesNames, insertExercise, insertCustomUserExercise} = require('../database/sql');
 const connection = require('../database/connection');
 
 const getExercises = (req, res) => {
@@ -13,6 +13,25 @@ const getExercises = (req, res) => {
     });
 }
 
+const createNewExercise = (req, res) => {
+    const {exerciseName, userEmail} = req.body;
+    connection.query(insertExercise(exerciseName, true), (error, result) => {
+        if (error) {
+            console.log(`Error inserting exercise: ${exerciseName}`);
+            return res.status(404).json({error});
+        }
+
+        connection.query(insertCustomUserExercise(exerciseName, userEmail), (error, result) => {
+            if (error) {
+                console.log(`Error inserting exerciseUser with user: ${userEmail}, and exercise name: ${exerciseName}`);
+                return res.status(404).json({error});
+            }
+            res.status(202).json(result);
+        })
+    })
+}
+
 module.exports = {
-    getExercises
+    getExercises,
+    createNewExercise
 };

@@ -1,8 +1,11 @@
 const express = require('express');
 const exercisesRouter = express.Router();
-const {getExercises} = require('../controller/ExercisesController');
+const {getExercises, createNewExercise} = require('../controller/ExercisesController');
+const {validateUserByBody} = require('../validations/validateUser');
+const {verifyToken} = require('../auth/tokenAuth');
 
 exercisesRouter.get('/getExercises/', getExercises);
+exercisesRouter.post('/create/newExercise', [verifyToken, validateUserByBody], createNewExercise);
 
 module.exports = {
     exercisesRouter

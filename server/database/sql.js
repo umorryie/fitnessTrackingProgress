@@ -64,8 +64,17 @@ const getUsersExercise = (userEmail, exerciseName) => {
         )`;
 };
 
-const insertUserExercise = (exerciseName, userEmail) => {
-    return `insert into users_exercises (exercise_id, user_id) values ('${exerciseName}', '${userEmail}')`;
+const insertUserExercise = (exerciseId, userId) => {
+    return `insert into users_exercises (exercise_id, user_id) values ('${exerciseId}', '${userId}')`;
+}
+
+const insertCustomUserExercise = (exerciseName, userEmail) => {
+    return `
+        insert into users_exercises (exercise_id, user_id)
+        values (
+            (select id from exercises where name = '${exerciseName}'),
+            (select id from users where email = '${userEmail}')
+        )`;
 }
 
 const insertExerciseProgress = (userExerciseId, sets, reps, weight, weightUnit) => {
@@ -123,5 +132,6 @@ module.exports = {
     insertExerciseProgress,
     getAllUsersInformation,
     getExerciseId,
-    updateExerciseProgress
+    updateExerciseProgress,
+    insertCustomUserExercise
 };
