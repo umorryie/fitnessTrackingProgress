@@ -1,0 +1,46 @@
+.leftRoutingContainer{
+    width: 100%;
+    height: 100%;
+}
+.logoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+}
+.logoImage img {
+    width: 230px;
+}
+.routingContainer{
+    margin: 30px;
+}
+.dashboardRoutingListing{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    font-weight: normal;
+    color: #495057;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    
+    background: linear-gradient(to left, rgb(255, 255, 255) 50%, #495057 50%) right;
+    background-size: 200%;
+    transition: .6s ease-out;
+} 
+.dashboardRoutingListing:hover{
+    list-style-type: none;
+    margin: 30px 0;
+    font-weight: normal;
+    cursor: pointer;
+    color: #fff;
+    background-position: left;
+    transition: 0.2s ease;
+    border-radius: 10px;
+} 
+@media (max-width:450px) {
+    .logoImage img {
+        max-width: 40vw;
+    }
+}
