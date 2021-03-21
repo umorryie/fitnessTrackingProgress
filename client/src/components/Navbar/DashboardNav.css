@@ -1,38 +1,44 @@
-.dashboardNav{
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-    margin: 0px 40px;
+.dashboard {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #5e5f5c;
+  height: 80px;
+  justify-content: space-between;
+  margin: 20px 0px;
 }
-.dashboardName{
-    display: flex;
-    color:#495057;
-    font-size: 1.8rem;
+.pageText {
+  text-transform: uppercase;
+  font-size: 40px;
 }
-.dashboardIcons{
-    display: flex;
-    align-items: center;
+li {
+  list-style: none;
 }
-.profileImage img{
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+.personalInfo > li {
+  display: inline-block;
+  margin: 0px 10px;
 }
-.date{
-    margin-right: 30px;
+.dashboardContainer {
+  width: 90%;
+  margin: auto;
 }
-.menuIcon{
-    margin-right: 10px;
-    cursor: pointer;
+.cursorHover:hover {
+  cursor: pointer;
 }
-
-@media (min-width:960px) {
-    .menuIcon {
-        display: none;
-        visibility:hidden;
-        position: fixed;
-        max-width: 100%;
-        transition: 1s ease-in-out;
-    }
+.pictureLi {
+  width: 70px;
+  height: 70px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profilePicture {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+.personalInfo {
+  display: flex;
+  align-items: center;
 }

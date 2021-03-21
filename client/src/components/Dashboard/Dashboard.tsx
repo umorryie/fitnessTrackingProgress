@@ -1,7 +1,6 @@
 import React from 'react';
 import './Dashboard.css'
 import DashboardNav from '../Navbar/DashboardNav';
-import { ExerciseCard } from '../ExerciseCard/ExerciseCard';
 interface MyProps {
     name: string,
     toggleMainMenu: any,
@@ -33,13 +32,7 @@ class Dashboard extends React.Component<ParentProps, MyProps> {
     render() {
         return (
             <div className="dashboardContainer">
-                <DashboardNav
-                    name={this.getName()}
-                    date={this.getDate()}
-                    toggleMainMenu={this.props.toggleMainMenu}
-                ></DashboardNav>
                 <div className="exerciseCardsContainers">
-                    <ExerciseCard></ExerciseCard>
                 </div>
             </div>
         );

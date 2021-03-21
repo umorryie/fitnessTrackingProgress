@@ -1,46 +1,45 @@
-.leftRoutingContainer{
-    width: 100%;
-    height: 100%;
+.leftNavigationDashboard {
+  background-color: #e2f2fb;
+  min-height: 100vh;
+  width: inherit;
+  height: 100%;
 }
-.logoContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 350px;
+.navListing {
+  height: 300px;
+  padding: 200px 0px;
+  width: 100%;
+  position: sticky;
+  top: 0px;
 }
-.logoImage img {
-    width: 230px;
+.specificNav {
+  padding: 10px 0px;
+  margin: 2px 0px;
 }
-.routingContainer{
-    margin: 30px;
+.navItem {
+  margin: 30px;
 }
-.dashboardRoutingListing{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
-    font-weight: normal;
-    color: #495057;
-    height: 50px;
-    cursor: pointer;
-    border-radius: 10px;
-    
-    background: linear-gradient(to left, rgb(255, 255, 255) 50%, #495057 50%) right;
-    background-size: 200%;
-    transition: .6s ease-out;
-} 
-.dashboardRoutingListing:hover{
-    list-style-type: none;
-    margin: 30px 0;
-    font-weight: normal;
-    cursor: pointer;
-    color: #fff;
-    background-position: left;
-    transition: 0.2s ease;
-    border-radius: 10px;
-} 
-@media (max-width:450px) {
-    .logoImage img {
-        max-width: 40vw;
-    }
+.specificNav:hover {
+  cursor: pointer;
+}
+.specificNavActive {
+  background-color: #ffffff;
+}
+.specificNavNotActive {
+  background-color: #f6fbfe;
+}
+.iconActive {
+  color: #ff3462;
+}
+.iconNotActive {
+  color: #f6b4c8;
+}
+.leftNavigationDashboardFixedPosition {
+  width: 270px;
+}
+
+@media (max-width: 900px) {
+  .leftNavigationDashboardFixedPosition {
+    display: none;
+    visibility: hidden;
+  }
 }
