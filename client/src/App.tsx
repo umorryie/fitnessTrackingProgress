@@ -1,34 +1,60 @@
-//import { useState, useEffect } from 'react';
 import './App.css';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-//import { useSelector, useDispatch } from 'react-redux';
-//import { selectUserExercises } from './redux/features/userExercises';
 import LeftRouting from './components/LeftRouting/LeftRouting';
 import DashboardNav from './components/Navbar/DashboardNav';
-import ExerciseCard from './components/ExerciseCard/ExerciseCard';
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { selectUser } from './redux/features/user';
+import { selectActiveNavbar } from './redux/features/activeNavbar';
+import navbarEnums from './constants/NavbarEnums';
+import DashboardContent from './components/DashboardContent/DashboardContent';
+import ExercisesContent from './components/ExercisesContent/ExercisesContent';
+import FriendsContent from './components/FriendsContent/FriendsContent';
 
 function App() {
-  /*
-  const [month1, setMonth1] = useState('March');
-  const [month2, setMonth2] = useState('April');
-  const [month3, setMonth3] = useState('May');
-  const exercises = useSelector(selectUserExercises);
-  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const activeNav = useSelector(selectActiveNavbar);
 
-  const fetchExercises = async () => {
-    const data = await fetch('http://localhost:8080/exercises');
-    const jsonData = await data.json();
-    return jsonData;
-  }*/
+  const renderContent = () => {
+    switch (activeNav.activeNavbar) {
+      case navbarEnums.dashboard:
+        return <DashboardContent />;
+      case navbarEnums.friends:
+        return <FriendsContent />;
+      case navbarEnums.exercises:
+        return <ExercisesContent />;
+    }
+  }
+
   return (
-    <div className="App">
-      <LeftRouting></LeftRouting>
-      <div className="rightContainer">
-        <DashboardNav></DashboardNav>
-        <ExerciseCard></ExerciseCard>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/login" exact={true}>
+            <Login />
+          </Route>
+          <Route path="/signup" exact={true}>
+            <SignUp />
+          </Route>
+          <Route path="/dashboard" exact={true}>
+            {(!user || !user.jwt || user.jwt === null || user.jwt === '') ? <Redirect to={{ pathname: "/login" }} /> :
+              <div className="dashboardContentContainer">
+                <LeftRouting></LeftRouting>
+                <div className="rightContainer">
+                  <DashboardNav></DashboardNav>
+                  {renderContent()}
+                </div>
+              </div>}
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 

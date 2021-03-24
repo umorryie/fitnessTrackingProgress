@@ -5,7 +5,8 @@ export const userSlice = createSlice({
     initialState: {
         email: null,
         cookieID: null,
-        sessionID: null
+        sessionID: null,
+        jwt: null
     },
     reducers: {
         setUserEmail: (state, action) => {
@@ -16,13 +17,14 @@ export const userSlice = createSlice({
         },
         setUserSessionID: (state, action) => {
             state.sessionID = action.payload
+        },
+        setJWT: (state, action) => {
+            state.jwt = action.payload
         }
     }
 });
 
-export const { setUserEmail, setUserCookieID, setUserSessionID } = userSlice.actions;
-export const selectUserEmail = (state: any) => state.email;
-export const selectUserCookieID = (state: any) => state.cookieID;
-export const selectUserSessionID = (state: any) => state.sessionID;
+export const { setUserEmail, setUserCookieID, setUserSessionID, setJWT } = userSlice.actions;
+export const selectUser = (state: any) => state.user;
 
 export default userSlice.reducer;

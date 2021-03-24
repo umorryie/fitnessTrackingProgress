@@ -27,15 +27,15 @@
   transition: 0.4s ease-in-out;
 }
 .addProgress:hover,
-.downloadProgress:hover,
-.filter:hover {
+.downloadProgress:hover {
   transform: scale(1.1);
   transition: 0.4s ease-in-out;
 }
 .personalInfoDiv {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: 90%;
+  margin: 20px auto;
 }
 .downloadAndAddProgress {
   display: flex;
@@ -48,16 +48,6 @@
 }
 .leftPadding {
   margin: 0px 12px;
-}
-.filter {
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
-  padding: 10px 25px;
-  transition: 0.4s ease-in-out;
 }
 .bold {
   font-weight: bold;
@@ -73,11 +63,6 @@
   width: 95%;
   margin: auto;
 }
-.contesntInnerContainer {
-  display: flex;
-  width: 95%;
-  margin: auto;
-}
 .graphContainer {
   width: 50%;
 }
@@ -88,19 +73,6 @@
   align-items: center;
   justify-content: center;
 }
-.circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 6px solid #71c0ee;
-  color: #f66c90;
-  font-size: 26px;
-  font-weight: bold;
-  margin: 20px 10px;
-}
 .months {
   display: flex;
 }
@@ -108,7 +80,7 @@
   border-radius: 5px;
   background-color: #ff3462;
   padding: 7px 7px;
-  margin: 0px 5px;
+  margin: auto;
   transition: 0.2s ease-in-out;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: white;
@@ -121,12 +93,89 @@
   transition: 0.2s ease-in-out;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .monthActive:hover,
 .monthArrow:hover {
-  cursor: pointer;
   transition: 0.2s ease-in-out;
+}
+.monthArrow:hover,
+.insertProgressButton:hover {
+  cursor: pointer;
 }
 .exerciseName::first-letter {
   text-transform: capitalize;
+}
+.insertProgressContainer {
+  display: block;
+  width: 50%;
+  position: relative;
+}
+.insertProgressContainer > input,
+.insertProgressContainer button,
+.insertProgressButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.weightUnit {
+  display: flex;
+  width: 70%;
+  margin: auto;
+  padding: 15px 0px;
+}
+.insertProgressContainer > input {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.2;
+  display: block;
+  width: 50%;
+  height: 52px;
+  background: 0 0;
+  padding: 0 5px;
+  border: none;
+  border-bottom: 2px solid rgb(168, 164, 164);
+  outline: none;
+}
+.insertProgressButton {
+  border-radius: 5px;
+  background-color: #ff3462;
+  padding: 15px;
+  transition: 0.4s ease-in-out;
+  color: #fff;
+  width: 70%;
+}
+.slider {
+  height: 40px;
+  width: 70%;
+}
+.lbs,
+.kg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 15%;
+  font-size: 18px;
+  color: #555;
+  line-height: 1.2;
+  width: 45%;
+  height: 52px;
+  border: none;
+  outline: none;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  cursor: pointer;
+}
+.weightUnitActive {
+  background-color: #f184a1;
+  border-radius: 5px;
+}
+.insertProgressContainer .exitIcon {
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
 }

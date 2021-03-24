@@ -1,0 +1,16 @@
+.dashboardEditableRowContainer {
+  overflow-y: scroll;
+  height: 300px;
+  width: 100%;
+}
+.editableContent {
+  width: 100%;
+  margin: auto;
+}
+th {
+  text-align: left;
+}
+.editRowContainer,
+.editableContainer {
+  width: 100% !important;
+}

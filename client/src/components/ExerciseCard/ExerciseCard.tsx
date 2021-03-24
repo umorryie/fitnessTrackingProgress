@@ -2,12 +2,20 @@ import { useState, useEffect } from 'react';
 import './ExerciseCard.css';
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faArrowLeft, faArrowRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import IDataPoints from '../../interfaces/IDataPoints';
+import { selectUser } from '../../redux/features/user';
+import EditableStats from '../EditableStats/EditableStats';
+import { useSelector } from 'react-redux';
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 let universalArray: any[] = [];
 
-function ExerciseCard() {
+function ExerciseCard(data: any) {
+    const addProgress = <FontAwesomeIcon icon={faPlusCircle} className="leftPadding" />;
+    const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />;
+    const arrowRight = <FontAwesomeIcon icon={faArrowRight} />;
+    const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleAddingProgress() }} />;
+
     const [activeMonthName, setActiveMonthName] = useState('');
     const [activeYearNumber, setActiveYearNumber] = useState(0);
     const [activeMonthNameIndex, setActiveMonthNameIndex] = useState(0);
@@ -17,33 +25,49 @@ function ExerciseCard() {
     const [exerciseName, setExerciseName] = useState('');
     const [allYears, setAllYears] = useState(universalArray);
     const [allMonths, setAllMonths] = useState(universalArray);
+    const [addSets, setAddSets] = useState('');
+    const [addWeight, setAddWeight] = useState('');
+    const [addReps, setAddReps] = useState('');
+    const [addingProgress, setAddingProgress] = useState(false);
+    const [addWeightUnit, setAddWeightUnit] = useState('kg');
+    const [addDate, setAddDate] = useState(getDate(null));
+    const user = useSelector(selectUser);
     const [chartOptions, setChartOptions] = useState({});
-    const addProgress = <FontAwesomeIcon icon={faPlusCircle} className="leftPadding" />
-    const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
-    const arrowRight = <FontAwesomeIcon icon={faArrowRight} />
 
     useEffect(() => {
-        fetch('http://localhost:8080/exercises')
-            .then(data => data.json())
-            .then(jsonData => {
-                const { exerciseName, years } = jsonData.exercises[0];
-                const { yearNumber, months } = jsonData.exercises[0].years[jsonData.exercises[0].years.length - 1];
-                const { monthName, options } = jsonData.exercises[0].years[jsonData.exercises[0].years.length - 1].months[jsonData.exercises[0].years[jsonData.exercises[0].years.length - 1].months.length - 1];
-                const yearsLength = years.length - 1;
-                const monthsLength = months.length - 1;
-                setActiveMonthNameIndex(monthsLength);
-                setActiveYearNumberIndex(yearsLength);
-                setExerciseName(exerciseName);
-                setAllMonths(months);
-                setAllYears(years);
-                setActiveMonthName(monthName);
-                setActiveYearNumber(yearNumber);
-                setChartOptions(determineChartOptions(options.dataPoints, options.suffix, activeMonthName, activeYearNumber));
-                determineNextMonthExistence(monthsLength, yearsLength, years, months);
-                determinePreviousMonthExistence(monthsLength, yearsLength);
-            });
+        const resultData = data.data;
+        const { exerciseName, years } = resultData;
+        const { yearNumber, months } = resultData.years[resultData.years.length - 1];
+        const { monthName, options } = resultData.years[resultData.years.length - 1].months[resultData.years[resultData.years.length - 1].months.length - 1];
+        const yearsLength = years.length - 1;
+        const monthsLength = months.length - 1;
+        setActiveMonthNameIndex(monthsLength);
+        setActiveYearNumberIndex(yearsLength);
+        setExerciseName(exerciseName);
+        setAllMonths(months);
+        setAllYears(years);
+        setActiveMonthName(monthName);
+        setActiveYearNumber(yearNumber);
+        setChartOptions(determineChartOptions(options.dataPoints, options.suffix, activeMonthName, activeYearNumber));
+        determineNextMonthExistence(monthsLength, yearsLength, years, months);
+        determinePreviousMonthExistence(monthsLength, yearsLength);
     }, []);
-
+    const addInputs = (event: any, target: string) => {
+        switch (target) {
+            case 'addReps':
+                setAddReps(event.target.value);
+                break;
+            case 'addSets':
+                setAddSets(event.target.value);
+                break;
+            case 'addWeight':
+                setAddWeight(event.target.value);
+                break;
+            case 'addDate':
+                setAddDate(event.target.value);
+                break;
+        }
+    }
     const changeMonthLeft = () => {
         let newActiveYearNumberIndex = null;
         let newMonthIndexDueYearChange = null;
@@ -66,7 +90,7 @@ function ExerciseCard() {
         }
         setActiveMonthNameIndex(newActiveMonthNameIndex);
 
-        if (newMonthsDueYearChange == null) {
+        if (newMonthsDueYearChange === null) {
             options = allMonths[newActiveMonthNameIndex].options;
             monthName = allMonths[newActiveMonthNameIndex].monthName;
         } else {
@@ -106,7 +130,7 @@ function ExerciseCard() {
         }
 
         setActiveMonthNameIndex(newActiveMonthNameIndex);
-        if (newMonthsDueYearChange == null) {
+        if (newMonthsDueYearChange === null) {
             options = allMonths[newActiveMonthNameIndex].options;
             monthName = allMonths[newActiveMonthNameIndex].monthName;
         } else {
@@ -117,9 +141,9 @@ function ExerciseCard() {
         setChartOptions(determineChartOptions(options.dataPoints, options.suffix, activeMonthName, activeYearNumber));
 
         if (newActiveYearNumberIndex != null) {
-            determineNextMonthExistence(newActiveMonthNameIndex, newActiveYearNumberIndex, null, null);
+            determineNextMonthExistence(newActiveMonthNameIndex, newActiveYearNumberIndex, newMonthsDueYearChange || null, null);
         } else {
-            determineNextMonthExistence(newActiveMonthNameIndex, activeYearNumberIndex, null, null);
+            determineNextMonthExistence(newActiveMonthNameIndex, activeYearNumberIndex, newMonthsDueYearChange || null, null);
         }
         setPreviousMonthExists(true);
     }
@@ -155,23 +179,58 @@ function ExerciseCard() {
         }
         setNextMonthExists(true);
     }
-
+    const toggleAddingProgress = () => {
+        setAddingProgress(!addingProgress);
+    }
+    const insertProgress = () => {
+        fetch('http://localhost:3001/api/users/user/postExerciseProgress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + user.jwt
+            },
+            mode: 'cors',
+            body: JSON.stringify({ exerciseName: data.data.exerciseName, sets: addSets, reps: addReps, weight: addWeight, weightUnit: addWeightUnit, date: addDate })
+        }).then(res => res.json()).then(console.log)
+    }
+    const renderStatsContainer = () => {
+        if (addingProgress) {
+            return (<div className="insertProgressContainer">
+                {exitButton}
+                <input type="number" value={addReps} placeholder="Add reps" onChange={(event) => { addInputs(event, 'addReps'); }} />
+                <input type="number" value={addSets} placeholder="Add sets" onChange={(event) => { addInputs(event, 'addSets'); }} />
+                <input type="number" value={addWeight} placeholder="Add weight" onChange={(event) => { addInputs(event, 'addWeight'); }} />
+                <input type="date" value={addDate} onChange={(event) => { addInputs(event, 'addDate'); }} />
+                <div className="checkboxes">
+                    <div className="weightUnit">
+                        <div className={addWeightUnit === 'lbs' ? "lbs weightUnitActive" : "lbs weightUnitNotActive"} onClick={() => { setAddWeightUnit('lbs'); }}><span>lbs</span></div>
+                        <div className="slider"></div>
+                        <div className={addWeightUnit === 'kg' ? "lbs weightUnitActive" : "lbs weightUnitNotActive"} onClick={() => { setAddWeightUnit('kg'); }}><span>kg</span></div>
+                    </div>
+                </div>
+                <div className="insertProgressButton" onClick={() => { insertProgress(); toggleAddingProgress(); }}>Insert progress</div>
+            </div>);
+        } else {
+            return (
+                <div className="statsContainer">
+                    <EditableStats exerciseName={exerciseName} />
+                </div>);
+        }
+    }
     return (
         <div className="exerciseContainer">
             <div className="exerciseInnerContainer">
                 <div className="exerciseName bold">{exerciseName}</div>
-                {/*    NAV    START                      */}
                 <div className="exerciseNavBar">
                     <div className="personalInfoDiv">
                         <div className="months">
                             {previousMonthExists ? <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div> : null}
-                            <div className="monthActive" onClick={() => { }}>{activeMonthName} {activeYearNumber}</div>
+                            <div className="monthActive">{activeMonthName} {activeYearNumber}</div>
                             {nextMonthExists ? <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div> : null}
                         </div>
-                        <div className="cursorHover filter">Filter</div>
                         <div className="downloadAndAddProgress">
                             <div className="cursorHover downloadProgress leftPadding">Download progress</div>
-                            <div className="cursorHover addProgress whiteColor leftPadding">Add progress{addProgress}</div>
+                            {addingProgress ? null : <div className="cursorHover addProgress whiteColor leftPadding" onClick={() => { toggleAddingProgress(); }}>Add progress{addProgress}</div>}
                         </div>
                     </div>
                 </div>
@@ -180,17 +239,7 @@ function ExerciseCard() {
                         <CanvasJSChart options={chartOptions}
                         />
                     </div>
-                    <div className="statsContainer">
-                        <div className="circle">
-                            200lbs
-                </div>
-                        <div className="circle">
-                            2 sets
-                </div>
-                        <div className="circle">
-                            12 reps
-                </div>
-                    </div>
+                    {renderStatsContainer()}
                 </div>
             </div>
         </div>
@@ -204,6 +253,10 @@ function determineChartOptions(dataPoints: IDataPoints[], suffix: string, month:
             includeZero: true,
             suffix
         },
+        axisX: {
+            minimum: 0,
+            maximum: 31
+        },
         animationEnabled: true,
         toolTip: {
             shared: true
@@ -212,9 +265,44 @@ function determineChartOptions(dataPoints: IDataPoints[], suffix: string, month:
             type: "area",
             name: `${month} ${year}`,
             showInLegend: false,
+            toolTipContent: "<span style=\"color:#4F81BC \">{dateName}</span><br>Sets: {sets}<br>Weight: {y} {suffix}<br>Reps: {reps}",
             dataPoints
         }]
     }
 }
 
+function getDate(dateParam: (Date | null)) {
+    if (dateParam) {
+        const monthNumber: number = dateParam.getMonth() + 1;
+        const day: number = dateParam.getDate();
+        let monthString: string;
+        let dateDay: string;
+
+        if (monthNumber < 10) {
+            monthString = `0${monthNumber.toString()}`;
+        } else {
+            monthString = monthNumber.toString();
+        }
+        if (day < 10) {
+            dateDay = `0${day.toString()}`;
+        } else {
+            dateDay = day.toString();
+        }
+
+        return `${dateParam.getFullYear()}-${monthString}-${dateDay}`
+    } else {
+        const rightNow = new Date();
+        const monthNumber: number = rightNow.getMonth() + 1;
+        let monthString: string;
+        if (monthNumber < 10) {
+            monthString = `0${monthNumber.toString()}`;
+        } else {
+            monthString = monthNumber.toString();
+        }
+
+        return `${rightNow.getFullYear()}-${monthString}-${rightNow.getDate()}`
+    }
+}
+
 export default ExerciseCard;
+export { getDate };

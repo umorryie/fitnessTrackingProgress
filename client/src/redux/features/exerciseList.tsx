@@ -21,6 +21,6 @@ export const exerciseListSlice = createSlice({
 });
 
 export const { setExerciseList, addExerciseToExerciseList } = exerciseListSlice.actions;
-export const selectExerciseList = (state: any) => state.exercises.exerciseList;
+export const selectExerciseList = (state: any) => state.exerciseList;
 
 export default exerciseListSlice.reducer;

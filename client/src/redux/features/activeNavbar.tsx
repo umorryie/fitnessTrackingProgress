@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const navbarSlice = createSlice({
-    name: 'user',
+    name: 'activeDashboard',
     initialState: {
-        activeNavbar: 'Dashboard'
+        activeNavbar: 'Exercises'
     },
     reducers: {
         setActiveNavbar: (state, action) => {

@@ -1,0 +1,9 @@
+.editableRow {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.hoverIcon:hover {
+  cursor: pointer;
+}
