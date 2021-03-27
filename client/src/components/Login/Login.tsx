@@ -28,7 +28,7 @@ function Login() {
         setEmail(event.target.value);
     }
     const setExercises = () => {
-        fetch('http://localhost:3001/api/exercises/getExercises')
+        fetch('api/exercises/getExercises')
             .then(res => res.json())
             .then(exercises => {
                 const notCustomExercises = exercises.filter((el: any) => !el.isCustomExercise);
@@ -36,7 +36,7 @@ function Login() {
             })
     }
     const setUserInformation = (token: string) => {
-        fetch('http://localhost:3001/api/users/user/getUser', {
+        fetch('api/users/user/getUser', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -59,7 +59,7 @@ function Login() {
         }).catch(er => console.log(er));
     }
     const loginCredentials = () => {
-        fetch('http://localhost:3001/api/users/user/login', {
+        fetch('api/users/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

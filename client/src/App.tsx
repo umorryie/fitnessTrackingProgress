@@ -16,6 +16,7 @@ import navbarEnums from './constants/NavbarEnums';
 import DashboardContent from './components/DashboardContent/DashboardContent';
 import ExercisesContent from './components/ExercisesContent/ExercisesContent';
 import FriendsContent from './components/FriendsContent/FriendsContent';
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App() {
   const user = useSelector(selectUser);
@@ -36,6 +37,9 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/" exact={true}>
+            <LandingPage />
+          </Route>
           <Route path="/login" exact={true}>
             <Login />
           </Route>

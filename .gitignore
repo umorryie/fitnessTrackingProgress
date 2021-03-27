@@ -3,3 +3,4 @@
 *node_modules
 /server/pgdata
 /server/mysql
+/server/.env

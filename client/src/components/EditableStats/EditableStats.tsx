@@ -78,7 +78,7 @@ function EditableStats(data: IExerciseName) {
         );
     }
     const editProgress = () => {
-        fetch('http://localhost:3001/api/users/user/update/exerciseProgress', {
+        fetch('api/users/user/update/exerciseProgress', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

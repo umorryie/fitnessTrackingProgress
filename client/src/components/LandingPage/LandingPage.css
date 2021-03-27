@@ -1,0 +1,97 @@
+.landingPage {
+  width: 100%;
+}
+.firstPage {
+  position: relative;
+  height: 100vh;
+  background-image: url("https://wallpapermemory.com/uploads/652/fitness-background-hd-1080p-130436.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.signUpAndLoginButtons {
+  position: absolute;
+  top: 0px;
+  display: flex;
+  right: 0px;
+}
+.title,
+.signUpNow,
+.logIn,
+.signUp,
+.subTitle {
+  color: white;
+}
+.learnMore {
+  color: #ff3562;
+}
+.signUp {
+  background-color: #ff3562;
+  padding: 20px 30px;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  cursor: pointer;
+}
+.logIn {
+  padding: 20px 30px;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  cursor: pointer;
+}
+.firstPageContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signUpAndLearnMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.title {
+  font-size: 70px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.subTitle {
+  text-align: center;
+}
+.signUpNow {
+  background-color: #ff3562;
+  padding: 15px 25px;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  cursor: pointer;
+  margin: 0px 20px;
+  text-align: center;
+}
+.learnMore {
+  background-color: #fff;
+  padding: 15px 25px;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  margin: 0px 20px;
+  cursor: pointer;
+  text-align: center;
+}
+.firstPageContentContainer {
+  width: 90%;
+}
+@media only screen and (max-width: 1000px) {
+  .title {
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width: 430px) {
+  .signUpNow,
+  .learnMore {
+    padding: 10px 8px;
+    font-size: 16px;
+  }
+}

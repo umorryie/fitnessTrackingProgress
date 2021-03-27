@@ -24,7 +24,7 @@ function SignUp() {
         setRepassword(event.target.value);
     }
     const registerUser = () => {
-        fetch('http://localhost:3001/api/users/user/register', {
+        fetch('api/users/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

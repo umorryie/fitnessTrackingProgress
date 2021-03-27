@@ -183,7 +183,7 @@ function ExerciseCard(data: any) {
         setAddingProgress(!addingProgress);
     }
     const insertProgress = () => {
-        fetch('http://localhost:3001/api/users/user/postExerciseProgress', {
+        fetch('api/users/user/postExerciseProgress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

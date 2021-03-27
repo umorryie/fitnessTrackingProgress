@@ -11,7 +11,7 @@ function EditableStatsRow(data: any) {
     const user = useSelector(selectUser);
 
     const deleteRow = () => {
-        fetch('http://localhost:3001/api/users/user/delete/exerciseProgress', {
+        fetch('api/users/user/delete/exerciseProgress', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

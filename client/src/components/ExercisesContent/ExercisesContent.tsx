@@ -65,7 +65,7 @@ function ExercisesContent() {
     }
 
     const insertExerciseAndProgress = () => {
-        fetch('http://localhost:3001/api/users/user/postExerciseProgress', {
+        fetch('api/users/user/postExerciseProgress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
