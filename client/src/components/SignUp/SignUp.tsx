@@ -1,13 +1,13 @@
 import './SignUp.css';
 import { useDispatch } from 'react-redux';
-import { setJWT } from '../../redux/features/user';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
+import { registerUser } from '../../controllers/UserController';
 
 function SignUp() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [email, setEmail] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
 
@@ -18,31 +18,14 @@ function SignUp() {
         setPassword(event.target.value);
     }
     const emailInput = (event: any) => {
-        setEmail(event.target.value);
+        setUserEmail(event.target.value);
     }
     const rePasswordInput = (event: any) => {
         setRepassword(event.target.value);
     }
-    const registerUser = () => {
-        fetch('api/users/user/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            body: JSON.stringify({ userEmail: email, password, repassword })
-        }).then(res => res.json()).then(result => {
-            const { token, userEmail } = result;
-            if (token && userEmail) {
-                localStorage.setItem('jwt', token);
-                dispatch(setJWT(token));
-                history.push('/dashboard');
-            }
-        })
-    }
     const onKeyDown = (event: any) => {
         if (event.keyCode === 13) {
-            registerUser();
+            registerUser(userEmail, password, repassword, dispatch, history);
         }
     }
 
@@ -69,7 +52,7 @@ function SignUp() {
                         </div>
                     </div>
                     <div className="submitSignUp">
-                        <button onClick={() => { registerUser(); }}>Sign up</button>
+                        <button onClick={() => { registerUser(userEmail, password, repassword, dispatch, history); }}>Sign up</button>
                     </div>
                 </div>
             </div>

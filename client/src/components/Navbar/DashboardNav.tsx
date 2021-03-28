@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectActiveNavbar } from '../../redux/features/activeNavbar';
 import { setJWT } from '../../redux/features/user';
 import { useHistory } from "react-router-dom";
+import { setUserExercises, setOriginalExercises } from '../../redux/features/userExercises';
 
 function DashboardNav() {
     const bell = <FontAwesomeIcon icon={faBell} />
@@ -18,6 +19,8 @@ function DashboardNav() {
     const signOut = () => {
         localStorage.removeItem("jwt");
         dispatch(setJWT(null));
+        dispatch(setUserExercises([]));
+        dispatch(setOriginalExercises([]));
         history.push('/login');
     }
 

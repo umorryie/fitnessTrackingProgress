@@ -6,7 +6,9 @@ import { faPlusCircle, faArrowLeft, faArrowRight, faTimes } from '@fortawesome/f
 import IDataPoints from '../../interfaces/IDataPoints';
 import { selectUser } from '../../redux/features/user';
 import EditableStats from '../EditableStats/EditableStats';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { insertProgress } from '../../controllers/UserController';
+
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 let universalArray: any[] = [];
 
@@ -16,6 +18,7 @@ function ExerciseCard(data: any) {
     const arrowRight = <FontAwesomeIcon icon={faArrowRight} />;
     const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleAddingProgress() }} />;
 
+    const dispatch = useDispatch();
     const [activeMonthName, setActiveMonthName] = useState('');
     const [activeYearNumber, setActiveYearNumber] = useState(0);
     const [activeMonthNameIndex, setActiveMonthNameIndex] = useState(0);
@@ -25,9 +28,9 @@ function ExerciseCard(data: any) {
     const [exerciseName, setExerciseName] = useState('');
     const [allYears, setAllYears] = useState(universalArray);
     const [allMonths, setAllMonths] = useState(universalArray);
-    const [addSets, setAddSets] = useState('');
-    const [addWeight, setAddWeight] = useState('');
-    const [addReps, setAddReps] = useState('');
+    const [addSets, setAddSets] = useState(0);
+    const [addWeight, setAddWeight] = useState(0);
+    const [addReps, setAddReps] = useState(0);
     const [addingProgress, setAddingProgress] = useState(false);
     const [addWeightUnit, setAddWeightUnit] = useState('kg');
     const [addDate, setAddDate] = useState(getDate(null));
@@ -182,17 +185,6 @@ function ExerciseCard(data: any) {
     const toggleAddingProgress = () => {
         setAddingProgress(!addingProgress);
     }
-    const insertProgress = () => {
-        fetch('api/users/user/postExerciseProgress', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + user.jwt
-            },
-            mode: 'cors',
-            body: JSON.stringify({ exerciseName: data.data.exerciseName, sets: addSets, reps: addReps, weight: addWeight, weightUnit: addWeightUnit, date: addDate })
-        }).then(res => res.json()).then(console.log)
-    }
     const renderStatsContainer = () => {
         if (addingProgress) {
             return (<div className="insertProgressContainer">
@@ -208,7 +200,10 @@ function ExerciseCard(data: any) {
                         <div className={addWeightUnit === 'kg' ? "lbs weightUnitActive" : "lbs weightUnitNotActive"} onClick={() => { setAddWeightUnit('kg'); }}><span>kg</span></div>
                     </div>
                 </div>
-                <div className="insertProgressButton" onClick={() => { insertProgress(); toggleAddingProgress(); }}>Insert progress</div>
+                <div className="insertProgressButton" onClick={() => {
+                    insertProgress(data.data.exerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
+                    toggleAddingProgress();
+                }}>Insert progress</div>
             </div>);
         } else {
             return (

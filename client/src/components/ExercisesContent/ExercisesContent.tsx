@@ -1,5 +1,5 @@
 import './ExercisesContent.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUserExercises } from '../../redux/features/userExercises';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import { useState, useEffect } from 'react';
@@ -7,18 +7,20 @@ import { getDate } from '../ExerciseCard/ExerciseCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { selectUser } from '../../redux/features/user';
+import { insertExerciseAndProgress } from '../../controllers/UserController';
 
 function ExercisesContent() {
     const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleAddExerciseInput() }} />;
 
+    const dispatch = useDispatch();
     const userExercises = useSelector(selectUserExercises);
     const [exerciseInput, setExerciseInput] = useState('');
     const [loggedExercisesExist, setLoggedExercisesExist] = useState(false);
     const [addExerciseInput, setAddExerciseInput] = useState(false);
     const [addExerciseName, setAddExerciseName] = useState('');
-    const [addSets, setAddSets] = useState('');
-    const [addWeight, setAddWeight] = useState('');
-    const [addReps, setAddReps] = useState('');
+    const [addSets, setAddSets] = useState(0);
+    const [addWeight, setAddWeight] = useState(0);
+    const [addReps, setAddReps] = useState(0);
     const [addWeightUnit, setAddWeightUnit] = useState('kg');
     const [addDate, setAddDate] = useState(getDate(null));
     const user = useSelector(selectUser);
@@ -64,17 +66,6 @@ function ExercisesContent() {
         setAddExerciseInput(!addExerciseInput);
     }
 
-    const insertExerciseAndProgress = () => {
-        fetch('api/users/user/postExerciseProgress', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + user.jwt
-            },
-            mode: 'cors',
-            body: JSON.stringify({ exerciseName: addExerciseName, sets: addSets, reps: addReps, weight: addWeight, weightUnit: addWeightUnit, date: addDate })
-        }).then(res => res.json()).then(console.log)
-    }
     const renderMainContent = () => {
         if (addExerciseInput) {
             return (
@@ -93,7 +84,10 @@ function ExercisesContent() {
                                 <div className={addWeightUnit === 'kg' ? "lbs weightUnitActive" : "lbs weightUnitNotActive"} onClick={() => { setAddWeightUnit('kg'); }}><span>kg</span></div>
                             </div>
                         </div>
-                        <div className="insertProgressButton" onClick={() => { insertExerciseAndProgress(); toggleAddExerciseInput(); }}>Insert progress</div>
+                        <div className="insertProgressButton" onClick={() => {
+                            insertExerciseAndProgress(addExerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
+                            toggleAddExerciseInput();
+                        }}>Insert progress</div>
                     </div>
                 </div>
             );
@@ -112,7 +106,7 @@ function ExercisesContent() {
                                 : null
                             }
                             <div className="addExerciseButton" onClick={() => { toggleAddExerciseInput(); }}>
-                                    Add exercise
+                                Add exercise
                                 </div>
                         </div>
                     </div>

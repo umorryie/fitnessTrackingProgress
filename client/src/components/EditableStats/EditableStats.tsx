@@ -1,6 +1,6 @@
 import './EditableStats.css';
 import EditableStatsRow from '..//EditableStatsRow/EditableStatsRow';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUserExercises } from '../../redux/features/userExercises';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,10 +8,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { selectUser } from '../../redux/features/user';
 import { getDate } from '../ExerciseCard/ExerciseCard';
 import IExerciseName from '../../interfaces/IExerciseName';
+import { editProgress } from '../../controllers/UserController';
 
 function EditableStats(data: IExerciseName) {
     const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleEditingProgress() }} />;
 
+    const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const [editingProgress, setEditingProgress] = useState(false);
     const [editSets, setEditSets] = useState(0);
@@ -77,19 +79,6 @@ function EditableStats(data: IExerciseName) {
             </table>
         );
     }
-    const editProgress = () => {
-        fetch('api/users/user/update/exerciseProgress', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + user.jwt
-            },
-            mode: 'cors',
-            body: JSON.stringify({ exerciseProgressId: editExerciseProgressId, sets: editSets, weight: editWeight, reps: editReps, weightUnit: editWeightUnit, date: editDate })
-        }).then(res => res.json()).then(jsonRes => {
-            console.log(jsonRes);
-        }).catch(e => { console.log(e); })
-    }
     const toggleEditingProgress = () => {
         setEditingProgress(!editingProgress);
     }
@@ -109,7 +98,10 @@ function EditableStats(data: IExerciseName) {
                             <div className={editWeightUnit === 'kg' ? "lbs weightUnitActive" : "lbs weightUnitNotActive"} onClick={() => { setEditWeightUnit('kg'); }}><span>kg</span></div>
                         </div>
                     </div>
-                    <div className="insertProgressButton" onClick={() => { editProgress(); toggleEditingProgress(); }}>Edit progress</div>
+                    <div className="insertProgressButton" onClick={() => {
+                        editProgress(editExerciseProgressId, editSets, editWeight, editReps, editWeightUnit, editDate, user.jwt, dispatch);
+                        toggleEditingProgress();
+                    }}>Edit progress</div>
                 </div>
                 :
                 renderContent()

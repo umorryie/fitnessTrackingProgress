@@ -12,3 +12,40 @@
   min-height: 100%;
   display: flex;
 }
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.errorDiv {
+  position: absolute;
+  color: rgb(51, 49, 49);
+  background-color: #ce7f7f;
+  animation-name: popUp;
+  animation-duration: 0.7s;
+  padding:18px 40px;
+  border-radius: 5px;
+  top: 50%;
+  max-width: 60%;
+  margin: auto;
+}
+.errorExitIcon{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  color: rgb(51, 49, 49);
+  cursor: pointer;
+}
+@keyframes popUp {
+  from {
+    top: -300px;
+  }
+  to {
+    top: 50%;
+  }
+}

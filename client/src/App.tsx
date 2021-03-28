@@ -9,19 +9,25 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from './redux/features/user';
 import { selectActiveNavbar } from './redux/features/activeNavbar';
+import { selectError, setErrorExist, setMessage } from './redux/features/errorHandler';
 import navbarEnums from './constants/NavbarEnums';
 import DashboardContent from './components/DashboardContent/DashboardContent';
 import ExercisesContent from './components/ExercisesContent/ExercisesContent';
 import FriendsContent from './components/FriendsContent/FriendsContent';
 import LandingPage from './components/LandingPage/LandingPage';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
-  const user = useSelector(selectUser);
-  const activeNav = useSelector(selectActiveNavbar);
+  const exitButton = <FontAwesomeIcon icon={faTimesCircle} onClick={() => { dispatch(setErrorExist(false)); dispatch(setMessage('')); }} />;
 
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const error = useSelector(selectError);
+  const activeNav = useSelector(selectActiveNavbar);
   const renderContent = () => {
     switch (activeNav.activeNavbar) {
       case navbarEnums.dashboard:
@@ -36,6 +42,18 @@ function App() {
   return (
     <Router>
       <div className="App">
+        {error.errorExist ? <div className="errorContainer">
+          <div className="errorDiv">
+            <div className="errorRelativeContainer">
+              <div className="errorExitIcon">
+                {exitButton}
+              </div>
+              <div className="errorText">
+                {error.message}
+              </div>
+            </div>
+          </div>
+        </div> : null}
         <Switch>
           <Route path="/" exact={true}>
             <LandingPage />
