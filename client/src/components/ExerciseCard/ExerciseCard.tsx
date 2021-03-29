@@ -8,6 +8,8 @@ import { selectUser } from '../../redux/features/user';
 import EditableStats from '../EditableStats/EditableStats';
 import { useSelector, useDispatch } from 'react-redux';
 import { insertProgress } from '../../controllers/UserController';
+import { validateExerciseInput } from '../../validations/validateExerciseInput';
+import { handleError } from '../../errorHandler/errorHandler';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 let universalArray: any[] = [];
@@ -185,6 +187,15 @@ function ExerciseCard(data: any) {
     const toggleAddingProgress = () => {
         setAddingProgress(!addingProgress);
     }
+    const validateAndInsertProgress = () => {
+        const validationResponse = validateExerciseInput(null, addSets, addReps, addWeight);
+        if (validationResponse) {
+            handleError(validationResponse, dispatch);
+        } else {
+            insertProgress(data.data.exerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
+            toggleAddingProgress();
+        }
+    }
     const renderStatsContainer = () => {
         if (addingProgress) {
             return (<div className="insertProgressContainer">
@@ -201,8 +212,7 @@ function ExerciseCard(data: any) {
                     </div>
                 </div>
                 <div className="insertProgressButton" onClick={() => {
-                    insertProgress(data.data.exerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
-                    toggleAddingProgress();
+                    validateAndInsertProgress();
                 }}>Insert progress</div>
             </div>);
         } else {

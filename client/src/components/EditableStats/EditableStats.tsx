@@ -9,6 +9,8 @@ import { selectUser } from '../../redux/features/user';
 import { getDate } from '../ExerciseCard/ExerciseCard';
 import IExerciseName from '../../interfaces/IExerciseName';
 import { editProgress } from '../../controllers/UserController';
+import { validateExerciseInput } from '../../validations/validateExerciseInput';
+import { handleError } from '../../errorHandler/errorHandler';
 
 function EditableStats(data: IExerciseName) {
     const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleEditingProgress() }} />;
@@ -82,6 +84,16 @@ function EditableStats(data: IExerciseName) {
     const toggleEditingProgress = () => {
         setEditingProgress(!editingProgress);
     }
+    const validateAndEditProgress = () => {
+        const validationResponse = validateExerciseInput(null, editSets, editReps, editWeight);
+        if (validationResponse) {
+            handleError(validationResponse, dispatch);
+        } else {
+            editProgress(editExerciseProgressId, editSets, editWeight, editReps, editWeightUnit, editDate, user.jwt, dispatch);
+            toggleEditingProgress();
+        }
+    }
+
     return (
         <div className={editingProgress ? "editRowContainer" : "dashboardEditableRowContainer"}>
             {editingProgress ?
@@ -99,8 +111,7 @@ function EditableStats(data: IExerciseName) {
                         </div>
                     </div>
                     <div className="insertProgressButton" onClick={() => {
-                        editProgress(editExerciseProgressId, editSets, editWeight, editReps, editWeightUnit, editDate, user.jwt, dispatch);
-                        toggleEditingProgress();
+                        validateAndEditProgress();
                     }}>Edit progress</div>
                 </div>
                 :

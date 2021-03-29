@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { selectUser } from '../../redux/features/user';
 import { insertExerciseAndProgress } from '../../controllers/UserController';
+import { validateExerciseInput } from '../../validations/validateExerciseInput';
+import { handleError } from '../../errorHandler/errorHandler';
 
 function ExercisesContent() {
     const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleAddExerciseInput() }} />;
@@ -27,7 +29,7 @@ function ExercisesContent() {
 
     useEffect(() => {
         setLoggedExercisesExist(userExercises.exercises && userExercises.exercises.length > 0);
-    }, []);
+    }, [userExercises.exercises]);
     const addInputs = (event: any, target: string) => {
         switch (target) {
             case 'addReps':
@@ -65,6 +67,16 @@ function ExercisesContent() {
     const toggleAddExerciseInput = () => {
         setAddExerciseInput(!addExerciseInput);
     }
+    const validateAndInsert = () => {
+        const validationResponse = validateExerciseInput(addExerciseName, addSets, addReps, addWeight);
+        if (validationResponse) {
+            handleError(validationResponse, dispatch);
+        } else {
+            insertExerciseAndProgress(addExerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
+            toggleAddExerciseInput();
+            setLoggedExercisesExist(true);
+        }
+    }
 
     const renderMainContent = () => {
         if (addExerciseInput) {
@@ -85,8 +97,7 @@ function ExercisesContent() {
                             </div>
                         </div>
                         <div className="insertProgressButton" onClick={() => {
-                            insertExerciseAndProgress(addExerciseName, addSets, addReps, addWeight, addWeightUnit, addDate, user.jwt, dispatch);
-                            toggleAddExerciseInput();
+                            validateAndInsert();
                         }}>Insert progress</div>
                     </div>
                 </div>

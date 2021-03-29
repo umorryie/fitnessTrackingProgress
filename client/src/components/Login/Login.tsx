@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useState, useEffect } from 'react';
 import { setUserInformation, loginCredentials } from '../../controllers/UserController';
+import { validateLogin } from '../../validations/login';
+import { handleError } from '../../errorHandler/errorHandler';
 
 function Login() {
     const dispatch = useDispatch();
@@ -12,9 +14,9 @@ function Login() {
     useEffect(() => {
         const token = localStorage.getItem('jwt');
         if (token) {
-            setUserInformation(token, history, dispatch);
+            setUserInformation(token, history, dispatch, false);
         }
-    }, []);
+    }, [history, dispatch]);
 
     const redirectToSignUp = () => {
         history.push("/signup");
@@ -27,9 +29,18 @@ function Login() {
     }
     const onKeyDown = (event: any) => {
         if (event.keyCode === 13) {
+            loginWithValidation();
+        }
+    }
+    const loginWithValidation = () => {
+        const validationResponse = validateLogin(userEmail, password);
+        if (validationResponse) {
+            handleError(validationResponse, dispatch);
+        } else {
             loginCredentials(userEmail, password, dispatch, history);
         }
     }
+
     return (
         <div className="loginContainer">
             <div className="loginInnerContainer">
@@ -52,7 +63,7 @@ function Login() {
                     </div>
                     </div>
                     <div className="submitLogin">
-                        <button onClick={() => { loginCredentials(userEmail, password, dispatch, history); }}>Login</button>
+                        <button onClick={() => { loginWithValidation(); }}>Login</button>
                     </div>
                 </div>
             </div>

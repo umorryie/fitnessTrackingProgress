@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import { registerUser } from '../../controllers/UserController';
+import { validateSignUp } from '../../validations/signup';
+import { handleError } from '../../errorHandler/errorHandler';
 
 function SignUp() {
     const dispatch = useDispatch();
@@ -25,6 +27,14 @@ function SignUp() {
     }
     const onKeyDown = (event: any) => {
         if (event.keyCode === 13) {
+            signUpWithValidation();
+        }
+    }
+    const signUpWithValidation = () => {
+        const validationResponse = validateSignUp(userEmail, password, repassword);
+        if (validationResponse) {
+            handleError(validationResponse, dispatch);
+        } else {
             registerUser(userEmail, password, repassword, dispatch, history);
         }
     }
@@ -43,7 +53,7 @@ function SignUp() {
                         <input type="password" id="password" name="password" placeholder="Password" onChange={(event) => { passwordInput(event); }} onKeyDown={event => onKeyDown(event)} />
                     </div>
                     <div className="passwordSignUp">
-                        <input type="password" id="password" name="re-password" placeholder="Re-enter password" onChange={(event) => { rePasswordInput(event); }} onKeyDown={event => onKeyDown(event)} />
+                        <input type="password" id="repassword" name="re-password" placeholder="Re-enter password" onChange={(event) => { rePasswordInput(event); }} onKeyDown={event => onKeyDown(event)} />
                     </div>
                     <div className="tos">
                         <div className="tosContainer">
@@ -52,7 +62,7 @@ function SignUp() {
                         </div>
                     </div>
                     <div className="submitSignUp">
-                        <button onClick={() => { registerUser(userEmail, password, repassword, dispatch, history); }}>Sign up</button>
+                        <button onClick={() => { signUpWithValidation(); }}>Sign up</button>
                     </div>
                 </div>
             </div>

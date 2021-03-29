@@ -1,18 +1,22 @@
 import { setJWT } from '../redux/features/user';
 import { setUserExercises, setOriginalExercises } from '../redux/features/userExercises';
 import { setExerciseList } from '../redux/features/exerciseList';
+import { handleError } from '../errorHandler/errorHandler';
 
 const setExercises = (dispatch: any) => {
     fetch('api/exercises/getExercises')
         .then(res => res.json())
         .then(exercises => {
+            if (handleError(exercises, dispatch)) {
+                return;
+            }
             const notCustomExercises = exercises.filter((el: any) => !el.isCustomExercise);
             dispatch(setExerciseList(notCustomExercises));
         })
         .catch(console.log)
 }
 
-const setUserInformation = (token: string, history: any, dispatch: any) => {
+const setUserInformation = (token: string, history: any, dispatch: any, validateError: boolean) => {
     fetch('api/users/user/getUser', {
         method: 'GET',
         headers: {
@@ -20,18 +24,21 @@ const setUserInformation = (token: string, history: any, dispatch: any) => {
         },
         mode: 'cors',
     }).then(el => el.json()).then(res => {
-        const { error } = res;
-        if (!error) {
-            const exercisesResponse = res.exercises;
-            const originalExerciseResponse = res.originalExercises;
-
-            if (exercisesResponse && originalExerciseResponse) {
-                dispatch(setJWT(token));
-                dispatch(setUserExercises(exercisesResponse));
-                dispatch(setOriginalExercises(originalExerciseResponse));
-                setExercises(dispatch);
-                history.push('/dashboard');
+        if (validateError) {
+            if (handleError(res, dispatch)) {
+                return;
             }
+        }
+
+        const exercisesResponse = res.exercises;
+        const originalExerciseResponse = res.originalExercises;
+
+        if (exercisesResponse && originalExerciseResponse) {
+            dispatch(setJWT(token));
+            dispatch(setUserExercises(exercisesResponse));
+            dispatch(setOriginalExercises(originalExerciseResponse));
+            setExercises(dispatch);
+            history.push('/dashboard');
         }
     }).catch(er => console.log(er));
 }
@@ -44,17 +51,17 @@ const setUserInformationAfterDatabaseModification = (token: string, dispatch: an
         },
         mode: 'cors',
     }).then(el => el.json()).then(res => {
-        const { error } = res;
-        if (!error) {
-            const exercisesResponse = res.exercises;
-            const originalExerciseResponse = res.originalExercises;
+        if (handleError(res, dispatch)) {
+            return;
+        }
+        const exercisesResponse = res.exercises;
+        const originalExerciseResponse = res.originalExercises;
 
-            if (exercisesResponse && originalExerciseResponse) {
-                dispatch(setJWT(token));
-                dispatch(setUserExercises(exercisesResponse));
-                dispatch(setOriginalExercises(originalExerciseResponse));
-                setExercises(dispatch);
-            }
+        if (exercisesResponse && originalExerciseResponse) {
+            dispatch(setJWT(token));
+            dispatch(setUserExercises(exercisesResponse));
+            dispatch(setOriginalExercises(originalExerciseResponse));
+            setExercises(dispatch);
         }
     }).catch(er => console.log(er));
 }
@@ -68,14 +75,15 @@ const loginCredentials = (userEmail: string, password: string, dispatch: any, hi
         mode: 'cors',
         body: JSON.stringify({ userEmail, password })
     }).then(res => res.json()).then((results: any) => {
+        if (handleError(results, dispatch)) {
+            return;
+        }
         if (results && results.match) {
             const token = results.token;
             if (token) {
                 localStorage.setItem('jwt', token);
-                setUserInformation(token, history, dispatch);
+                setUserInformation(token, history, dispatch, true);
             }
-        } else {
-            alert("Password do not match");
         }
     }).catch(console.log)
 }
@@ -89,6 +97,9 @@ const registerUser = (userEmail: string, password: string, repassword: string, d
         mode: 'cors',
         body: JSON.stringify({ userEmail, password, repassword })
     }).then(res => res.json()).then(result => {
+        if (handleError(result, dispatch)) {
+            return;
+        }
         const { token, userEmail } = result;
         if (token && userEmail) {
             localStorage.setItem('jwt', token);
@@ -108,7 +119,9 @@ const editProgress = (editExerciseProgressId: number, editSets: number, editWeig
         mode: 'cors',
         body: JSON.stringify({ exerciseProgressId: editExerciseProgressId, sets: editSets, weight: editWeight, reps: editReps, weightUnit: editWeightUnit, date: editDate })
     }).then(res => res.json()).then(jsonRes => {
-        console.log(jsonRes);
+        if (handleError(jsonRes, dispatch)) {
+            return;
+        }
         setUserInformationAfterDatabaseModification(jwt, dispatch);
     }).catch(e => { console.log(e); })
 }
@@ -123,7 +136,9 @@ const deleteRow = (rowId: number, jwt: string, dispatch: any) => {
         mode: 'cors',
         body: JSON.stringify({ exerciseProgressId: rowId })
     }).then(res => res.json()).then(jsonRes => {
-        console.log(jsonRes);
+        if (handleError(jsonRes, dispatch)) {
+            return;
+        }
         setUserInformationAfterDatabaseModification(jwt, dispatch);
     }).catch(e => { console.log(e); })
 }
@@ -139,8 +154,10 @@ const insertProgress = (exerciseName: string, sets: number, reps: number, weight
         mode: 'cors',
         body: JSON.stringify({ exerciseName, sets, reps, weight, weightUnit, date })
     }).then(res => res.json())
-        .then(el=>{
-            console.log(el);
+        .then(el => {
+            if (handleError(el, dispatch)) {
+                return;
+            }
             setUserInformationAfterDatabaseModification(jwt, dispatch);
         })
         .catch(console.log)
@@ -156,8 +173,10 @@ const insertExerciseAndProgress = (exerciseName: string, sets: number, reps: num
         mode: 'cors',
         body: JSON.stringify({ exerciseName, sets, reps, weight, weightUnit, date })
     }).then(res => res.json())
-        .then(el=>{
-            console.log(el);
+        .then(el => {
+            if (handleError(el, dispatch)) {
+                return;
+            }
             setUserInformationAfterDatabaseModification(jwt, dispatch);
         })
         .catch(console.log)
