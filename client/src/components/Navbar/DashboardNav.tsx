@@ -30,7 +30,7 @@ function DashboardNav() {
                 <div className="pageText cursorHover">{activeNav.activeNavbar}</div>
                 <div className="ulDiv">
                     <ul className="personalInfo">
-                        <li className="cursorHover mediaDisplay">10 Mar 2021, Wednesday</li>
+                        <li className="cursorHover mediaDisplay">{getTodaysDate()}</li>
                         <li className="cursorHover mediaDisplay">{bell}</li>
                         <li className="cursorHover mediaDisplay">{settings}</li>
                         <li className="pictureLi mediaDisplay">
@@ -44,4 +44,17 @@ function DashboardNav() {
     );
 }
 
+const getTodaysDate = (): string => {
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const days: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const todayDate = new Date();
+    const month: number = todayDate.getMonth();
+    const dayNumber: number = todayDate.getDate();
+    const dayInWeekNumber: number = todayDate.getDay();
+    const dayName: string = days[dayInWeekNumber];
+    const monthName = monthsArray[month];
+    const year: number = todayDate.getFullYear();
+
+    return `${dayNumber} ${monthName} ${year}, ${dayName}`;
+}
 export default DashboardNav;
