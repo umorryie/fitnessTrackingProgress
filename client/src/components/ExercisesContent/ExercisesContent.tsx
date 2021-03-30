@@ -84,10 +84,10 @@ function ExercisesContent() {
                 <div className="addExerciseInput">
                     <div className="insertProgressContainer">
                         {exitButton}
-                        <input type="text" value={addExerciseName} placeholder="Exercise name" onChange={(event) => { addInputs(event, 'addExerciseName'); }} />
-                        <input type="number" value={addReps} placeholder="Add reps" onChange={(event) => { addInputs(event, 'addReps'); }} />
-                        <input type="number" value={addSets} placeholder="Add sets" onChange={(event) => { addInputs(event, 'addSets'); }} />
-                        <input type="number" value={addWeight} placeholder="Add weight" onChange={(event) => { addInputs(event, 'addWeight'); }} />
+                        <input type="text" placeholder="Exercise name" onChange={(event) => { addInputs(event, 'addExerciseName'); }} />
+                        <input type="number" placeholder="Add reps" onChange={(event) => { addInputs(event, 'addReps'); }} />
+                        <input type="number" placeholder="Add sets" onChange={(event) => { addInputs(event, 'addSets'); }} />
+                        <input type="number" placeholder="Add weight" onChange={(event) => { addInputs(event, 'addWeight'); }} />
                         <input type="date" value={addDate} onChange={(event) => { addInputs(event, 'addDate'); }} />
                         <div className="checkboxes">
                             <div className="weightUnit">

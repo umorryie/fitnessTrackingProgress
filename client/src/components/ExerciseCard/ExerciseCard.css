@@ -19,12 +19,14 @@
   border-radius: 5px;
   padding: 15px;
   transition: 0.4s ease-in-out;
+  text-align: center;
 }
 .addProgress {
   border-radius: 5px;
   background-color: #ff3462;
   padding: 15px;
   transition: 0.4s ease-in-out;
+  text-align: center;
 }
 .addProgress:hover,
 .downloadProgress:hover {
@@ -51,6 +53,7 @@
 }
 .bold {
   font-weight: bold;
+  color: #5e5f5c;
 }
 .exerciseName {
   padding: 20px;
@@ -89,13 +92,14 @@
   border-radius: 5px;
   background-color: #f184a1;
   padding: 7px 7px;
-  margin: 0px 5px;
+  margin: auto 5px;
   transition: 0.2s ease-in-out;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 20px;
 }
 .monthActive:hover,
 .monthArrow:hover {
@@ -176,6 +180,69 @@
 }
 .insertProgressContainer .exitIcon {
   position: absolute;
-  right: 0px;
+  right: 15px;
   cursor: pointer;
+}
+.whiteSeparator {
+  display: none;
+  visibility: hidden;
+}
+@media (max-width: 1050px) {
+  .contentContainer {
+    display: block;
+  }
+  .graphContainer {
+    width: 100%;
+  }
+  .statsContainer {
+    width: 80%;
+    margin: auto;
+  }
+  .dashboardEditableRowContainer {
+    display: flex;
+    padding: 10px 0px;
+  }
+  .insertProgressContainer {
+    width: 100%;
+    padding-bottom: 20px;
+  }
+  .whiteSeparator {
+    display: block;
+    visibility: visible;
+    height: 20px;
+  }
+}
+@media (max-width: 620px) {
+  .personalInfoDiv {
+    font-size: 14px;
+  }
+  .downloadAndAddProgress {
+    display: block;
+  }
+  .addProgress,
+  .downloadProgress {
+    padding: 8px 10px;
+    margin: 3px 0px;
+  }
+  .statsContainer {
+    width: 90%;
+  }
+
+  tbody {
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px) {
+  .addProgress,
+  .downloadProgress {
+    font-size: 13px;
+  }
+  .addProgress,
+  .downloadProgress {
+    padding: 8px 10px;
+    margin: 5px 0px;
+  }
+  tbody {
+    font-size: 12px;
+  }
 }

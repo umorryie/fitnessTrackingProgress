@@ -13,7 +13,7 @@ import { validateExerciseInput } from '../../validations/validateExerciseInput';
 import { handleError } from '../../errorHandler/errorHandler';
 
 function EditableStats(data: IExerciseName) {
-    const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon" onClick={() => { toggleEditingProgress() }} />;
+    const exitButton = <FontAwesomeIcon icon={faTimes} className="exitIcon positionTop" onClick={() => { toggleEditingProgress() }} />;
 
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
@@ -67,12 +67,12 @@ function EditableStats(data: IExerciseName) {
             <table className="editableContent">
                 <thead>
                     <tr>
-                        <th>Weight</th>
-                        <th>Sets</th>
-                        <th>Reps</th>
-                        <th>Date</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th className="tableColumnColor">Weight</th>
+                        <th className="tableColumnColor">Sets</th>
+                        <th className="tableColumnColor">Reps</th>
+                        <th className="tableColumnColor">Date</th>
+                        <th className="tableColumnColor">Edit</th>
+                        <th className="tableColumnColor">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,9 +99,18 @@ function EditableStats(data: IExerciseName) {
             {editingProgress ?
                 <div className="insertProgressContainer editableContainer">
                     {exitButton}
-                    <input type="number" value={editReps} placeholder="Add reps" onChange={(event) => { addInputs(event, 'editReps'); }} />
-                    <input type="number" value={editSets} placeholder="Add sets" onChange={(event) => { addInputs(event, 'editSets'); }} />
-                    <input type="number" value={editWeight} placeholder="Add weight" onChange={(event) => { addInputs(event, 'editWeight'); }} />
+                    <div className="inputContainer">
+                        <span>Reps</span>
+                        <input type="number" value={editReps} placeholder="Add reps" onChange={(event) => { addInputs(event, 'editReps'); }} />
+                    </div>
+                    <div className="inputContainer">
+                        <span>Sets</span>
+                        <input type="number" value={editSets} placeholder="Add sets" onChange={(event) => { addInputs(event, 'editSets'); }} />
+                    </div>
+                    <div className="inputContainer">
+                        <span>Weight</span>
+                        <input type="number" value={editWeight} placeholder="Add weight" onChange={(event) => { addInputs(event, 'editWeight'); }} />
+                    </div>
                     <input type="date" value={editDate} onChange={(event) => { addInputs(event, 'editDate'); }} />
                     <div className="checkboxes">
                         <div className="weightUnit">

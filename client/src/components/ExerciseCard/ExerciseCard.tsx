@@ -200,9 +200,9 @@ function ExerciseCard(data: any) {
         if (addingProgress) {
             return (<div className="insertProgressContainer">
                 {exitButton}
-                <input type="number" value={addReps} placeholder="Add reps" onChange={(event) => { addInputs(event, 'addReps'); }} />
-                <input type="number" value={addSets} placeholder="Add sets" onChange={(event) => { addInputs(event, 'addSets'); }} />
-                <input type="number" value={addWeight} placeholder="Add weight" onChange={(event) => { addInputs(event, 'addWeight'); }} />
+                <input type="number" placeholder="Add reps" onChange={(event) => { addInputs(event, 'addReps'); }} />
+                <input type="number" placeholder="Add sets" onChange={(event) => { addInputs(event, 'addSets'); }} />
+                <input type="number" placeholder="Add weight" onChange={(event) => { addInputs(event, 'addWeight'); }} />
                 <input type="date" value={addDate} onChange={(event) => { addInputs(event, 'addDate'); }} />
                 <div className="checkboxes">
                     <div className="weightUnit">
@@ -228,24 +228,28 @@ function ExerciseCard(data: any) {
                 <div className="exerciseName bold">{exerciseName}</div>
                 <div className="exerciseNavBar">
                     <div className="personalInfoDiv">
-                        <div className="months">
-                            {previousMonthExists ? <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div> : null}
-                            <div className="monthActive">{activeMonthName} {activeYearNumber}</div>
-                            {nextMonthExists ? <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div> : null}
-                        </div>
+                        {addingProgress ? null :
+                            <div className="months">
+                                {previousMonthExists ? <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div> : null}
+                                <div className="monthActive">{activeMonthName} {activeYearNumber}</div>
+                                {nextMonthExists ? <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div> : null}
+                            </div>}
                         <div className="downloadAndAddProgress">
-                            <div className="cursorHover downloadProgress leftPadding">Download progress</div>
+                            {addingProgress ? null : <div className="cursorHover downloadProgress leftPadding">Download progress</div>}
                             {addingProgress ? null : <div className="cursorHover addProgress whiteColor leftPadding" onClick={() => { toggleAddingProgress(); }}>Add progress{addProgress}</div>}
                         </div>
                     </div>
                 </div>
                 <div className="contentContainer">
                     <div className="graphContainer">
-                        <CanvasJSChart options={chartOptions}
-                        />
+                        {!addingProgress ?
+                            <CanvasJSChart options={chartOptions} /> :
+                            null}
                     </div>
+                    <div className="whiteSeparator"></div>
                     {renderStatsContainer()}
                 </div>
+                <div className="whiteSeparator"></div>
             </div>
         </div>
     )

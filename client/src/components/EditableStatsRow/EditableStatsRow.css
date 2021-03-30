@@ -7,3 +7,12 @@
 .hoverIcon:hover {
   cursor: pointer;
 }
+.trashIcon {
+  color: #ff3462;
+}
+.editIcon {
+  color: #f1a3bb;
+}
+.tableColor {
+  color: #5e5f5c;
+}

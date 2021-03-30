@@ -44,3 +44,25 @@
   transform: scale(1.1);
   transition: 0.4s ease-in-out;
 }
+
+@media (max-width: 1050px) {
+  .addExerciseButton {
+    padding: 9px;
+  }
+}
+@media (max-width: 620px) {
+  .searchInput > input {
+    width: 250px;
+    text-align: center;
+    margin: auto;
+  }
+  .addExerciseButton {
+    height: 20px;
+    margin: auto auto 0 auto;
+    font-size: 15px;
+    padding: 7px;
+  }
+  .searchInput {
+    flex-direction: column-reverse;
+  }
+}
