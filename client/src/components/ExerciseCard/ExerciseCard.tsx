@@ -222,27 +222,38 @@ function ExerciseCard(data: any) {
                 </div>);
         }
     }
+    const determineAddElements = (): boolean => {
+        if (addingProgress) {
+            const { innerWidth } = window;
+            if (innerWidth < 1050) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     return (
         <div className="exerciseContainer">
             <div className="exerciseInnerContainer">
                 <div className="exerciseName bold">{exerciseName}</div>
                 <div className="exerciseNavBar">
                     <div className="personalInfoDiv">
-                        {addingProgress ? null :
+                        {determineAddElements() ? null :
                             <div className="months">
                                 {previousMonthExists ? <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div> : null}
                                 <div className="monthActive">{activeMonthName} {activeYearNumber}</div>
                                 {nextMonthExists ? <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div> : null}
                             </div>}
                         <div className="downloadAndAddProgress">
-                            {addingProgress ? null : <div className="cursorHover downloadProgress leftPadding">Download progress</div>}
-                            {addingProgress ? null : <div className="cursorHover addProgress whiteColor leftPadding" onClick={() => { toggleAddingProgress(); }}>Add progress{addProgress}</div>}
+                            {determineAddElements() ? null : <div className="cursorHover downloadProgress leftPadding">Download progress</div>}
+                            {determineAddElements() ? null : <div className="cursorHover addProgress whiteColor leftPadding" onClick={() => { toggleAddingProgress(); }}>Add progress{addProgress}</div>}
                         </div>
                     </div>
                 </div>
                 <div className="contentContainer">
                     <div className="graphContainer">
-                        {!addingProgress ?
+                        {!determineAddElements() ?
                             <CanvasJSChart options={chartOptions} /> :
                             null}
                     </div>
