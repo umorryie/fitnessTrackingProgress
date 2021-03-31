@@ -192,6 +192,9 @@
   display: none;
   visibility: hidden;
 }
+.hidden {
+  visibility: hidden;
+}
 @media (max-width: 1050px) {
   .contentContainer {
     display: block;
@@ -246,6 +249,27 @@
   .downloadProgress {
     padding: 8px 10px;
     margin: 5px 0px;
+  }
+  tbody {
+    font-size: 12px;
+  }
+}
+@media (max-width: 300px) {
+  .downloadProgress,
+  .addProgress,
+  .monthActive {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+  .personalInfoDiv,
+  .statsContainer {
+    width: 95%;
+  }
+  .monthArrow {
+    height: 14px;
+  }
+  thead {
+    font-size: 14px;
   }
   tbody {
     font-size: 12px;

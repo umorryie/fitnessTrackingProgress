@@ -241,9 +241,13 @@ function ExerciseCard(data: any) {
                     <div className="personalInfoDiv">
                         {determineAddElements() ? null :
                             <div className="months">
-                                {previousMonthExists ? <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div> : null}
+                                {previousMonthExists ?
+                                    <div className="monthArrow" onClick={() => { changeMonthLeft(); }}>{arrowLeft}</div>
+                                    : <div className="monthArrow hidden">{arrowLeft}</div>}
                                 <div className="monthActive">{activeMonthName} {activeYearNumber}</div>
-                                {nextMonthExists ? <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div> : null}
+                                {nextMonthExists ?
+                                    <div className="monthArrow" onClick={() => { changeMonthRight(); }}>{arrowRight}</div>
+                                    : <div className="monthArrow hidden">{arrowRight}</div>}
                             </div>}
                         <div className="downloadAndAddProgress">
                             {determineAddElements() ? null : <div className="cursorHover downloadProgress leftPadding">Download progress</div>}
