@@ -56,7 +56,7 @@ function ExerciseCard(data: any) {
         setChartOptions(determineChartOptions(options.dataPoints, options.suffix, activeMonthName, activeYearNumber));
         determineNextMonthExistence(monthsLength, yearsLength, years, months);
         determinePreviousMonthExistence(monthsLength, yearsLength);
-    }, []);
+    }, [data.data]);
     const addInputs = (event: any, target: string) => {
         switch (target) {
             case 'addReps':
