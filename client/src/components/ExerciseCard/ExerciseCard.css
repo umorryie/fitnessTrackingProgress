@@ -227,7 +227,8 @@
   }
 }
 @media (max-height: 650px) {
-  .signUpInnerContainer {
+  .signUpInnerContainer,
+  .loginInnerContainer {
     top: 40px;
     height: 400px !important;
   }
@@ -251,10 +252,12 @@
   tbody {
     font-size: 14px;
   }
-  .signUpCenterContainer {
+  .signUpCenterContainer,
+  .loginCenterContainer {
     padding-top: 20px;
   }
-  .signUpInnerContainer {
+  .signUpInnerContainer,
+  .loginInnerContainer {
     width: 70%;
   }
   .loginTitle,
@@ -276,7 +279,8 @@
   tbody {
     font-size: 12px;
   }
-  .signUpInnerContainer {
+  .signUpInnerContainer,
+  .loginInnerContainer {
     width: 90%;
   }
 }
