@@ -220,6 +220,18 @@
     height: 20px;
   }
 }
+@media (max-height: 760px) {
+  .loginTitle,
+  .signUpTitle {
+    top: -40px !important;
+  }
+}
+@media (max-height: 650px) {
+  .signUpInnerContainer {
+    top: 40px;
+    height: 400px !important;
+  }
+}
 @media (max-width: 620px) {
   .personalInfoDiv {
     font-size: 14px;
@@ -239,6 +251,17 @@
   tbody {
     font-size: 14px;
   }
+  .signUpCenterContainer {
+    padding-top: 20px;
+  }
+  .signUpInnerContainer {
+    width: 70%;
+  }
+  .loginTitle,
+  .signUpTitle {
+    padding: 15px 0px !important;
+    font-size: 20px !important;
+  }
 }
 @media (max-width: 400px) {
   .addProgress,
@@ -252,6 +275,9 @@
   }
   tbody {
     font-size: 12px;
+  }
+  .signUpInnerContainer {
+    width: 90%;
   }
 }
 @media (max-width: 300px) {
