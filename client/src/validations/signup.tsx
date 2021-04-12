@@ -15,7 +15,7 @@ const validateSignUp = (email: string, password: string, repassword: string) => 
     if (password.length < 8) {
         return mergeResponseObjectWithMessage("Password must have at least 8 characters.")
     }
-    if (!/^(?=.*[0-9])(?=.*[!@#$%^&*=!"<>])/.test(password)) {
+    if (!/^(?=.*[0-9])(?=.*[{}!@#$%^&*=!"<>])/.test(password)) {
         return mergeResponseObjectWithMessage("Password must contain special character and number.");
     }
 
