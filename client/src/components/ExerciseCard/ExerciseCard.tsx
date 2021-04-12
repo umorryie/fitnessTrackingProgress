@@ -156,7 +156,9 @@ function ExerciseCard(data: any) {
     const determinePreviousMonthExistence = (monthIndex: Number, yearIndex: Number) => {
         if (monthIndex === 0 && yearIndex === 0) {
             setPreviousMonthExists(false);
+            return;
         }
+        setPreviousMonthExists(true);
     }
 
     const determineNextMonthExistence = (monthIndex: Number, yearIndex: Number, allYearsArray: any, allMonthsArray: any) => {
