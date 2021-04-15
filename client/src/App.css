@@ -6,6 +6,8 @@
 }
 .rightContainer {
   width: 100%;
+  display: grid !important;
+  grid-template-rows: 120px 1fr !important;
 }
 .dashboardContentContainer {
   width: 100%;

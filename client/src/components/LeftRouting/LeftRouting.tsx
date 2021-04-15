@@ -12,11 +12,16 @@ function LeftRouting() {
     const exercisesIcon = <FontAwesomeIcon icon={faDumbbell} className={activeNav.activeNavbar === navbarEnums.exercises ? "iconActive" : "iconNotActive"} />
     const friendsIcon = <FontAwesomeIcon icon={faUserFriends} className={activeNav.activeNavbar === navbarEnums.friends ? "iconActive" : "iconNotActive"} />
     const dashboardIcon = <FontAwesomeIcon icon={faChartBar} className={activeNav.activeNavbar === navbarEnums.dashboard ? "iconActive" : "iconNotActive"} />
+
+    const closeNavbar = () => {
+        document.getElementsByClassName('leftNavigationDashboardFixedPosition')[0].className = "leftNavigationDashboardFixedPosition";
+    };
+
     return (
         <div className="leftNavigationDashboardFixedPosition">
             <div className="leftNavigationDashboard">
                 <div className="navListing">
-                    <div className={activeNav.activeNavbar === navbarEnums.dashboard ? "specificNav specificNavActive" : "specificNav specificNavNotActive"}
+                    {/*<div className={activeNav.activeNavbar === navbarEnums.dashboard ? "specificNav specificNavActive" : "specificNav specificNavNotActive"}
                         onClick={() => dispatch(setActiveNavbar(navbarEnums.dashboard))}
                     >
                         <span className="navItem">
@@ -25,9 +30,9 @@ function LeftRouting() {
                         <span className="">
                             {navbarEnums.dashboard}
                         </span>
-                    </div>
+                     </div>*/}
                     <div className={activeNav.activeNavbar === navbarEnums.exercises ? "specificNav specificNavActive" : "specificNav specificNavNotActive"}
-                        onClick={() => dispatch(setActiveNavbar(navbarEnums.exercises))}
+                        onClick={() => { dispatch(setActiveNavbar(navbarEnums.exercises)); closeNavbar(); }}
                     >
                         <span className="navItem">
                             {exercisesIcon}
@@ -37,7 +42,7 @@ function LeftRouting() {
                         </span>
                     </div>
                     <div className={activeNav.activeNavbar === navbarEnums.friends ? "specificNav specificNavActive" : "specificNav specificNavNotActive"}
-                        onClick={() => dispatch(setActiveNavbar(navbarEnums.friends))}
+                        onClick={() => { dispatch(setActiveNavbar(navbarEnums.friends)); closeNavbar(); }}
                     >
                         <span className="navItem">
                             {friendsIcon}

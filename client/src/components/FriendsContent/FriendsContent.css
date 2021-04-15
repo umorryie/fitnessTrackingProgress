@@ -1,0 +1,30 @@
+.friend-wrapper  {
+    width: 100%;
+    background-color: #f9f9f9;
+}
+.friends-container{
+    width: 95%;
+    margin: 0px auto;
+}
+.friends-content{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+.search-friends-input{
+    background-color: white !important;
+    margin: 10px 0px !important; 
+    border-radius: 7px 7px 0px 0px !important;
+    width: 100% !important;
+    text-align: center;
+}
+.add-friend-icon-wrapper{
+    position: relative;
+}
+.add-friend-icon{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #5e5f5c;
+}

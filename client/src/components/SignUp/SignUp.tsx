@@ -9,12 +9,20 @@ import { handleError } from '../../errorHandler/errorHandler';
 function SignUp() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
 
     const redirectToLogin = () => {
         history.push("/login");
+    }
+    const firstNameInput = (event: any) => {
+        setFirstName(event.target.value);
+    }
+    const lastNameInput = (event: any) => {
+        setLastName(event.target.value);
     }
     const passwordInput = (event: any) => {
         setPassword(event.target.value);
@@ -31,11 +39,11 @@ function SignUp() {
         }
     }
     const signUpWithValidation = () => {
-        const validationResponse = validateSignUp(userEmail, password, repassword);
+        const validationResponse = validateSignUp(firstName, lastName, userEmail, password, repassword);
         if (validationResponse) {
             handleError(validationResponse, dispatch);
         } else {
-            registerUser(userEmail, password, repassword, dispatch, history);
+            registerUser(firstName, lastName, userEmail, password, repassword, dispatch, history);
         }
     }
 
@@ -46,6 +54,12 @@ function SignUp() {
 
                     <div className="loginTitle" onClick={() => { redirectToLogin(); }}>Login</div>
                     <div className="signUpTitle">Sign up</div>
+                    <div className="emailSignUp">
+                        <input type="text" id="firstName" name="firstName" placeholder="First name" onChange={(event) => { firstNameInput(event); }} onKeyDown={event => onKeyDown(event)} />
+                    </div>
+                    <div className="emailSignUp">
+                        <input type="text" id="lastName" name="lastName" placeholder="Last name" onChange={(event) => { lastNameInput(event); }} onKeyDown={event => onKeyDown(event)} />
+                    </div>
                     <div className="emailSignUp">
                         <input type="text" id="email" name="email" placeholder="Email address" onChange={(event) => { emailInput(event); }} onKeyDown={event => onKeyDown(event)} />
                     </div>

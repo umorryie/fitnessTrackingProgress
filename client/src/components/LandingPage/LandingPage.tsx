@@ -25,9 +25,6 @@ function LandingPage() {
                     </div>
                 </div>
             </section>
-            <section id="section2" className="secondPage">
-                sdf
-            </section>
         </div>
     );
 }

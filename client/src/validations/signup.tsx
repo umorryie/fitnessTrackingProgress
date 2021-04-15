@@ -1,4 +1,10 @@
-const validateSignUp = (email: string, password: string, repassword: string) => {
+const validateSignUp = (firstName: string, lastName: string, email: string, password: string, repassword: string) => {
+    if (firstName === "") {
+        return mergeResponseObjectWithMessage("First name should not be empty.")
+    }
+    if (lastName === "") {
+        return mergeResponseObjectWithMessage("Last name should not be empty.")
+    }
     if (email === "") {
         return mergeResponseObjectWithMessage("Email should not be empty.")
     }

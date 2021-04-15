@@ -19,6 +19,7 @@ li {
   margin: 0px 10px;
 }
 .dashboardContainer {
+  position: relative;
   width: 90%;
   margin: auto;
 }
@@ -33,14 +34,25 @@ li {
   border-radius: 50%;
 }
 .profilePicture {
-  display: inline;
-  margin: 0 auto;
-  height: 100%;
-  width: auto;
+  background-image: url("https://i.stack.imgur.com/l60Hf.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .personalInfo {
   display: flex;
   align-items: center;
+}
+.hamburger {
+  display: none;
+  visibility: hidden;
+  position: absolute;
+  left: -30px;
+  height: 100%;
+  font-size: 27px;
+  cursor: pointer;
+  top: 10px;
+  color: #5e5f5c;
 }
 @media (max-width: 1050px) {
   .pictureLi {
@@ -52,15 +64,20 @@ li {
   }
 }
 @media (max-width: 900px) {
-  .leftNavigationDashboardFixedPosition {
-    display: none;
-    visibility: hidden;
-  }
   .mediaDisplay {
     display: none !important;
     visibility: hidden !important;
   }
   .pageText {
     font-size: 25px;
+  }
+  .hamburger {
+    display: inline;
+    visibility: visible;
+  }
+}
+@media (max-width: 700px) {
+  .hamburger {
+    left: -20px;
   }
 }

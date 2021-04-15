@@ -2,6 +2,8 @@ import { setJWT } from '../redux/features/user';
 import { setUserExercises, setOriginalExercises } from '../redux/features/userExercises';
 import { setExerciseList } from '../redux/features/exerciseList';
 import { handleError } from '../errorHandler/errorHandler';
+import { setFriends } from '../redux/features/friends';
+import { setAllUsers } from '../redux/features/allUsers';
 
 const setExercises = (dispatch: any) => {
     fetch('api/exercises/getExercises')
@@ -39,6 +41,8 @@ const setUserInformation = (token: string, history: any, dispatch: any, validate
             dispatch(setOriginalExercises(originalExerciseResponse));
             setExercises(dispatch);
             history.push('/dashboard');
+            setUpFriends(token, dispatch);
+            getAndSetAllUsers(token, dispatch);
         }
     }).catch(er => console.log(er));
 }
@@ -62,6 +66,7 @@ const setUserInformationAfterDatabaseModification = (token: string, dispatch: an
             dispatch(setUserExercises(exercisesResponse));
             dispatch(setOriginalExercises(originalExerciseResponse));
             setExercises(dispatch);
+            getAndSetAllUsers(token, dispatch);
         }
     }).catch(er => console.log(er));
 }
@@ -88,14 +93,14 @@ const loginCredentials = (userEmail: string, password: string, dispatch: any, hi
     }).catch(console.log)
 }
 
-const registerUser = (userEmail: string, password: string, repassword: string, dispatch: any, history: any) => {
+const registerUser = (firstName: string, lastName: string, userEmail: string, password: string, repassword: string, dispatch: any, history: any) => {
     fetch('api/users/user/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         mode: 'cors',
-        body: JSON.stringify({ userEmail, password, repassword })
+        body: JSON.stringify({ firstName, lastName, userEmail, password, repassword })
     }).then(res => res.json()).then(result => {
         if (handleError(result, dispatch)) {
             return;
@@ -105,6 +110,7 @@ const registerUser = (userEmail: string, password: string, repassword: string, d
             localStorage.setItem('jwt', token);
             dispatch(setJWT(token));
             history.push('/dashboard');
+            getAndSetAllUsers(token, dispatch);
         }
     }).catch(console.log)
 }
@@ -182,4 +188,96 @@ const insertExerciseAndProgress = (exerciseName: string, sets: number, reps: num
         .catch(console.log)
 }
 
-export { setUserInformation, loginCredentials, registerUser, editProgress, deleteRow, insertProgress, insertExerciseAndProgress };
+const setUpFriends = (jwt: string, dispatch: any) => {
+    fetch('api/users/friends', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors'
+    }).then(res => res.json())
+        .then(el => {
+            if (handleError(el, dispatch)) {
+                return;
+            }
+            dispatch(setFriends(el));
+        })
+        .catch(console.log)
+}
+
+const confirmFriendRequest = (friendshipId: number, jwt: string, dispatch: any) => {
+    fetch('api/users/friends/confirmation', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors',
+        body: JSON.stringify({ friendshipId })
+    }).then(res => res.json())
+        .then(el => {
+            if (handleError(el, dispatch)) {
+                return;
+            }
+            setUpFriends(jwt, dispatch);
+        })
+        .catch(console.log)
+}
+
+const deleteFriendRequest = (friendEmail: string, reverseNumbers: boolean, jwt: string, dispatch: any) => {
+    fetch('api/users/friends/delete', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors',
+        body: JSON.stringify({ friendEmail, reverseNumbers })
+    }).then(res => res.json())
+        .then(el => {
+            if (handleError(el, dispatch)) {
+                return;
+            }
+            setUpFriends(jwt, dispatch);
+        })
+        .catch(console.log)
+}
+
+const getAndSetAllUsers = (jwt: string, dispatch: any) => {
+    fetch('api/users/all', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors'
+    }).then(res => res.json())
+        .then(users => {
+            if (handleError(users, dispatch)) {
+                return;
+            }
+            dispatch(setAllUsers(users));
+        })
+        .catch(console.log)
+};
+
+const sendFriendRequest = (friendEmail: string, jwt: string, dispatch: any) => {
+    fetch('api/users/friends/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors',
+        body: JSON.stringify({friendEmail})
+    }).then(res => res.json())
+        .then(users => {
+            if (handleError(users, dispatch)) {
+                return;
+            }
+            setUpFriends(jwt, dispatch);
+        })
+        .catch(console.log)
+};
+export { sendFriendRequest, setUserInformation, getAndSetAllUsers, loginCredentials, registerUser, editProgress, deleteRow, insertProgress, insertExerciseAndProgress, confirmFriendRequest, deleteFriendRequest };

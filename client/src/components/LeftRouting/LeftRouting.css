@@ -39,7 +39,32 @@
 
 @media (max-width: 900px) {
   .leftNavigationDashboardFixedPosition {
-    display: none;
-    visibility: hidden;
+    position: absolute;
+    z-index: 11;
+    transition: 1s ease;
+    left: -400px;
+    animation-name: hide;
+    animation-duration: 2s;
+  }
+  .hamburger-to-navbar {
+    left: 0px;
+    animation-name: show;
+    animation-duration: 1s;
+  }
+}
+@keyframes hide {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -400px;
+  }
+}
+@keyframes show {
+  0% {
+    left: -400px;
+  }
+  100% {
+    left: 0px;
   }
 }
