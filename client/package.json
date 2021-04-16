@@ -54,6 +54,5 @@
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.31"
-  },
-  "proxy": "https://fitnessbackendtracking.herokuapp.com"
+  }
 }

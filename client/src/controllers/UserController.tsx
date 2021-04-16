@@ -4,9 +4,10 @@ import { setExerciseList } from '../redux/features/exerciseList';
 import { handleError } from '../errorHandler/errorHandler';
 import { setFriends } from '../redux/features/friends';
 import { setAllUsers } from '../redux/features/allUsers';
+const proxy = process.env.BACKEND || 'http://localhost:3001/';
 
 const setExercises = (dispatch: any) => {
-    fetch('api/exercises/getExercises')
+    fetch(`${proxy}` + 'api/exercises/getExercises')
         .then(res => res.json())
         .then(exercises => {
             if (handleError(exercises, dispatch)) {
@@ -19,7 +20,7 @@ const setExercises = (dispatch: any) => {
 }
 
 const setUserInformation = (token: string, history: any, dispatch: any, validateError: boolean) => {
-    fetch('api/users/user/getUser', {
+    fetch(`${proxy}` + 'api/users/user/getUser', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
@@ -48,7 +49,7 @@ const setUserInformation = (token: string, history: any, dispatch: any, validate
 }
 
 const setUserInformationAfterDatabaseModification = (token: string, dispatch: any) => {
-    fetch('api/users/user/getUser', {
+    fetch(`${proxy}` + 'api/users/user/getUser', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
@@ -72,7 +73,7 @@ const setUserInformationAfterDatabaseModification = (token: string, dispatch: an
 }
 
 const loginCredentials = (userEmail: string, password: string, dispatch: any, history: any) => {
-    fetch('api/users/user/login', {
+    fetch(`${proxy}` + 'api/users/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -94,7 +95,7 @@ const loginCredentials = (userEmail: string, password: string, dispatch: any, hi
 }
 
 const registerUser = (firstName: string, lastName: string, userEmail: string, password: string, repassword: string, dispatch: any, history: any) => {
-    fetch('api/users/user/register', {
+    fetch(`${proxy}` + 'api/users/user/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -116,7 +117,7 @@ const registerUser = (firstName: string, lastName: string, userEmail: string, pa
 }
 
 const editProgress = (editExerciseProgressId: number, editSets: number, editWeight: number, editReps: number, editWeightUnit: string, editDate: string, jwt: string, dispatch: any) => {
-    fetch('api/users/user/update/exerciseProgress', {
+    fetch(`${proxy}` + 'api/users/user/update/exerciseProgress', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -133,7 +134,7 @@ const editProgress = (editExerciseProgressId: number, editSets: number, editWeig
 }
 
 const deleteRow = (rowId: number, jwt: string, dispatch: any) => {
-    fetch('api/users/user/delete/exerciseProgress', {
+    fetch(`${proxy}` + 'api/users/user/delete/exerciseProgress', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ const deleteRow = (rowId: number, jwt: string, dispatch: any) => {
 
 
 const insertProgress = (exerciseName: string, sets: number, reps: number, weight: number, weightUnit: string, date: string, jwt: string, dispatch: any) => {
-    fetch('api/users/user/postExerciseProgress', {
+    fetch(`${proxy}` + 'api/users/user/postExerciseProgress', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -170,7 +171,7 @@ const insertProgress = (exerciseName: string, sets: number, reps: number, weight
 }
 
 const insertExerciseAndProgress = (exerciseName: string, sets: number, reps: number, weight: number, weightUnit: string, date: string, jwt: string, dispatch: any) => {
-    fetch('api/users/user/postExerciseProgress', {
+    fetch(`${proxy}` + 'api/users/user/postExerciseProgress', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -189,7 +190,7 @@ const insertExerciseAndProgress = (exerciseName: string, sets: number, reps: num
 }
 
 const setUpFriends = (jwt: string, dispatch: any) => {
-    fetch('api/users/friends', {
+    fetch(`${proxy}` + 'api/users/friends', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -207,7 +208,7 @@ const setUpFriends = (jwt: string, dispatch: any) => {
 }
 
 const confirmFriendRequest = (friendshipId: number, jwt: string, dispatch: any) => {
-    fetch('api/users/friends/confirmation', {
+    fetch(`${proxy}` + 'api/users/friends/confirmation', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -226,7 +227,7 @@ const confirmFriendRequest = (friendshipId: number, jwt: string, dispatch: any) 
 }
 
 const deleteFriendRequest = (friendEmail: string, reverseNumbers: boolean, jwt: string, dispatch: any) => {
-    fetch('api/users/friends/delete', {
+    fetch(`${proxy}` + 'api/users/friends/delete', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -245,7 +246,7 @@ const deleteFriendRequest = (friendEmail: string, reverseNumbers: boolean, jwt: 
 }
 
 const getAndSetAllUsers = (jwt: string, dispatch: any) => {
-    fetch('api/users/all', {
+    fetch(`${proxy}` + 'api/users/all', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -263,14 +264,14 @@ const getAndSetAllUsers = (jwt: string, dispatch: any) => {
 };
 
 const sendFriendRequest = (friendEmail: string, jwt: string, dispatch: any) => {
-    fetch('api/users/friends/add', {
+    fetch(`${proxy}` + 'api/users/friends/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
         mode: 'cors',
-        body: JSON.stringify({friendEmail})
+        body: JSON.stringify({ friendEmail })
     }).then(res => res.json())
         .then(users => {
             if (handleError(users, dispatch)) {
