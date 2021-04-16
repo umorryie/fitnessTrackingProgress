@@ -48,6 +48,9 @@ function Login() {
 
     return (
         <div className="loginContainer">
+            <video className="video" autoPlay muted loop>
+                <source src="motivation.mp4" type="video/mp4" />
+            </video>
             <div className="loginInnerContainer">
                 <div className="loginCenterContainer">
                     <div className="loginTitle">Login</div>

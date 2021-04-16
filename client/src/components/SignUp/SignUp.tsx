@@ -49,6 +49,9 @@ function SignUp() {
 
     return (
         <div className="signUpContainer">
+            <video className="video" autoPlay muted loop>
+                <source src="motivation.mp4" type="video/mp4" />
+            </video>
             <div className="signUpInnerContainer">
                 <div className="signUpCenterContainer">
 
