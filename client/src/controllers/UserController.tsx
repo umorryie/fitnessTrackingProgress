@@ -4,7 +4,7 @@ import { setExerciseList } from '../redux/features/exerciseList';
 import { handleError } from '../errorHandler/errorHandler';
 import { setFriends } from '../redux/features/friends';
 import { setAllUsers } from '../redux/features/allUsers';
-const proxy = process.env.BACKEND || 'http://localhost:3001/';
+const proxy = 'https://fitnessbackendtracking.herokuapp.com/';
 
 const setExercises = (dispatch: any) => {
     fetch(`${proxy}` + 'api/exercises/getExercises')
