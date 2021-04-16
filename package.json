@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod": "cd client && npm install && npm run build --production && cd .. && cd server && npm install && npm start",
-    "start": "cd server && cd dist && node server.js",
+    "start2": "cd server && cd dist && node server.js",
     "build": "cd client && npm install && npm run build --production && cd .. && cd server&& npm install && npm run tsc",
     "tsc": "tsc",
     "start1": "cd client && npm install && npm run build --production && cd .. && cd server && npm install && npm start"
