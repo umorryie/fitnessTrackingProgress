@@ -35,8 +35,17 @@
 }
 .leftNavigationDashboardFixedPosition {
   width: 270px;
+  position: relative;
 }
-
+.close_icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  cursor: pointer;
+  visibility: hidden;
+  display: none;
+}
 @media (max-width: 900px) {
   .leftNavigationDashboardFixedPosition {
     position: absolute;
@@ -50,6 +59,10 @@
     left: 0px;
     animation-name: show;
     animation-duration: 1s;
+  }
+  .close_icon {
+    visibility: visible;
+    display: inline;
   }
 }
 @keyframes hide {
