@@ -2,7 +2,7 @@ import './Login.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useState, useEffect } from 'react';
-import { setUserInformation, loginCredentials } from '../../controllers/UserController';
+import { setUserInformation, loginCredentials, demoLogin } from '../../controllers/UserController';
 import { validateLogin } from '../../validations/login';
 import { handleError } from '../../errorHandler/errorHandler';
 
@@ -40,11 +40,6 @@ function Login() {
             loginCredentials(userEmail, password, dispatch, history);
         }
     }
-    const demoLogin = () => {
-        const demoToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTYxODUyMjU4OSwiZXhwIjoxNjI3MTYyNTg5fQ.GgaquYtpsiYCWIPu6Ijs1L3v-4Y8cpQkOp2dv_q1xok`;
-        localStorage.setItem('jwt', demoToken);
-        setUserInformation(demoToken, history, dispatch, false);
-    }
 
     return (
         <div className="loginContainer">
@@ -55,7 +50,7 @@ function Login() {
                 <div className="loginCenterContainer">
                     <div className="loginTitle">Login</div>
                     <div className="signUpTitle" onClick={() => { redirectToSignUp(); }}>Sign up</div>
-                    <div className="demo-login" onClick={() => demoLogin()}>Try demo login</div>
+                    <div className="demo-login" onClick={() => demoLogin(dispatch, history)}>Try demo login</div>
                     <div className="emailLogin">
                         <input type="text" id="email" name="email" placeholder="Email address" onChange={(event) => { emailInput(event); }} onKeyDown={event => onKeyDown(event)} />
                     </div>

@@ -280,4 +280,24 @@ const sendFriendRequest = (friendEmail: string, jwt: string, dispatch: any) => {
         })
         .catch(console.log)
 };
-export { sendFriendRequest, setUserInformation, getAndSetAllUsers, loginCredentials, registerUser, editProgress, deleteRow, insertProgress, insertExerciseAndProgress, confirmFriendRequest, deleteFriendRequest };
+
+const demoLogin = (dispatch: any, history: any) => {
+    const demoToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTYxOTIxMTQ3OSwiZXhwIjoxNjgyMzI2Njc5fQ.c9M6YQrcyMjqj1X_a6DggAsGUCaovc4Z0ldTh3FSBhg`;
+    localStorage.setItem('jwt', demoToken);
+    setUserInformation(demoToken, history, dispatch, false);
+}
+
+export {
+    sendFriendRequest,
+    setUserInformation,
+    getAndSetAllUsers,
+    loginCredentials,
+    registerUser,
+    editProgress,
+    deleteRow,
+    insertProgress,
+    insertExerciseAndProgress,
+    confirmFriendRequest,
+    deleteFriendRequest,
+    demoLogin
+};

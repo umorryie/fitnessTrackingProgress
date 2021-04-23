@@ -1,6 +1,11 @@
 import './LeftRouting.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDumbbell, faUserFriends, faChartBar, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+    faDumbbell,
+    faUserFriends,
+    //faChartBar,
+    faTimes
+} from '@fortawesome/free-solid-svg-icons';
 import navbarEnums from '../../constants/NavbarEnums';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActiveNavbar, selectActiveNavbar } from '../../redux/features/activeNavbar';
@@ -11,7 +16,8 @@ function LeftRouting() {
 
     const exercisesIcon = <FontAwesomeIcon icon={faDumbbell} className={activeNav.activeNavbar === navbarEnums.exercises ? "iconActive" : "iconNotActive"} />
     const friendsIcon = <FontAwesomeIcon icon={faUserFriends} className={activeNav.activeNavbar === navbarEnums.friends ? "iconActive" : "iconNotActive"} />
-    const dashboardIcon = <FontAwesomeIcon icon={faChartBar} className={activeNav.activeNavbar === navbarEnums.dashboard ? "iconActive" : "iconNotActive"} />
+    // this is for dash board section
+    //const dashboardIcon = <FontAwesomeIcon icon={faChartBar} className={activeNav.activeNavbar === navbarEnums.dashboard ? "iconActive" : "iconNotActive"} />
     const closeIcon = <FontAwesomeIcon icon={faTimes} className="close_icon" onClick={() => {
         closeNavbar()
     }} />
