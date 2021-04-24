@@ -654,4 +654,39 @@ describe('api/users/friends', function () {
             expect(responseBody.error.name).to.equal("JsonWebTokenError");
         });
     });
+    
+    describe('POST', async function () {
+        it('should download progress - /api/users/user/downloadProgress', async function () {
+            // Act
+            let response = await request(app).post("/api/users/user/downloadProgress").set('Authorization', `Bearer ${token}`);
+            let responseBody = response.body;
+
+            // Assert
+            expect(responseBody).not.to.equal(null);
+            expect(response.status).to.equal(200);
+        });
+        it('no token - /api/users/user/downloadProgress', async function () {
+            // Act
+            let response = await request(app).post("/api/users/user/downloadProgress");
+            let responseBody = response.body;
+
+            // Assert
+            expect(response.status).to.equal(200);
+            expect(responseBody).not.to.equal(null);
+            expect(responseBody.error).not.to.equal(null);
+            expect(responseBody.error.message).not.to.equal(null);
+            expect(responseBody.error.message).to.equal("No token specified.");
+        });
+        it('wrong token - /api/users/user/downloadProgress', async function () {
+            // Act
+            let response = await request(app).post("/api/users/user/downloadProgress").set('Authorization', `Bearer asd${token}`);
+            let responseBody = response.body;
+
+            // Assert
+            expect(response.status).to.equal(200);
+            expect(responseBody).not.to.equal(null);
+            expect(responseBody.error).not.to.equal(null);
+            expect(responseBody.error.name).to.equal("JsonWebTokenError");
+        });
+    });
 });

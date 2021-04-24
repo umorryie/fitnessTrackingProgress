@@ -287,6 +287,38 @@ const demoLogin = (dispatch: any, history: any) => {
     setUserInformation(demoToken, history, dispatch, false);
 }
 
+const downloadProgress = (exerciseProgressId: number, jwt: string, dispatch: any) => {
+    fetch(`api/users/user/downloadProgress`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        mode: 'cors',
+        body: JSON.stringify({ exerciseProgressId })
+    }).then(async res => {
+        if (res.status === 404) {
+            return res.json();
+        }
+        const blob = await res.blob();
+        const newBlob = new Blob([blob]);
+
+        const blobUrl = window.URL.createObjectURL(newBlob);
+
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.setAttribute('download', 'progress.csv');
+        link.click();
+
+        return null;
+    }).then(error => {
+        if (handleError(error, dispatch)) {
+            return;
+        }
+        setUpFriends(jwt, dispatch);
+    }).catch(console.log)
+}
+
 export {
     sendFriendRequest,
     setUserInformation,
@@ -299,5 +331,6 @@ export {
     insertExerciseAndProgress,
     confirmFriendRequest,
     deleteFriendRequest,
-    demoLogin
+    demoLogin,
+    downloadProgress
 };

@@ -68,6 +68,12 @@ const friendDeleteSchema = joi.object({
     reverseNumbers: joi.boolean().required(),
 });
 
+const downloadProgressSchema = joi.object({
+    userEmail: joi.string().email().required(),
+    userId: joi.number().integer().required(),
+    exerciseProgressId: joi.number().integer().required().min(1)
+});
+
 export {
     userEmailSchema,
     postExerciseProgressSchema,
@@ -77,5 +83,6 @@ export {
     userOnLogin,
     friendOnAddOrEditSchema,
     friendshipConfirmationSchema,
-    friendDeleteSchema
+    friendDeleteSchema,
+    downloadProgressSchema
 }

@@ -11,7 +11,8 @@ const {
     addFriend,
     deleteFriendship,
     getAllUsers,
-    confirmFriendship } = require('../database/sql');
+    confirmFriendship,
+    getProgressForSpecificExercise } = require('../database/sql');
 import { IUserRepository } from '../interfaces/IUserRepository';
 
 export default class UserRepository implements IUserRepository {
@@ -170,6 +171,18 @@ export default class UserRepository implements IUserRepository {
             this.db.query(getAllUsers(id), (error, result) => {
                 if (error) {
                     console.log(`Error getting users`);
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
+    getProgressForSpecificExercise(id: number) {
+        return new Promise((resolve, reject) => {
+            this.db.query(getProgressForSpecificExercise(id), (error, result) => {
+                if (error) {
+                    console.log(`Error getting progress`);
                     return reject(error);
                 }
                 resolve(result);

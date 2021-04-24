@@ -8,7 +8,8 @@ import {
     validateUserOnLogin,
     validateFriendAddOrEdit,
     validateFriendshipConfirmationSchema,
-    validateFriendDelete
+    validateFriendDelete,
+    validateDownloadProgress
 } from '../validations/userControllerValidations';
 const { validateFriendConfirmationLegality } = require('../validations/validateFriendConfirmationLegality');
 const userRouter = express.Router();
@@ -22,6 +23,7 @@ const { getUser,
     addFriends,
     deleteFriends,
     confirmFriendship,
+    downloadProgress,
     getAllUsers } = require('../controller/UserController');
 const { validateUserByBody, validateFriend } = require('../validations/validateUser');
 const { validateExercise } = require('../validations/validateExercise');
@@ -39,6 +41,7 @@ userRouter.get('/all', [verifyToken, validateUserByBody, validateUserEmailSchema
 userRouter.post('/user/postExerciseProgress', [verifyToken, validateUserByBody, validateExercise, validatePostExerciseProgressSchema], postExerciseProgress);
 userRouter.put('/user/update/exerciseProgress', [verifyToken, validateUserByBody, validateUpdateExerciseProgressSchema], updateExerciseProgress);
 userRouter.delete('/user/delete/exerciseProgress', [verifyToken, validateUserByBody, validateDeleteExerciseProgressWithIdSchema], deleteExerciseProgressWithId);
+userRouter.post('/user/downloadProgress', [verifyToken, validateUserByBody, validateDownloadProgress], downloadProgress);
 
 // friendships
 userRouter.get('/friends', [verifyToken, validateUserByBody, validateUserEmailSchema], getFriends);

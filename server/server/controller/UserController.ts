@@ -1,3 +1,4 @@
+const { Parser } = require('json2csv');
 const { convert } = require('../converters/exerciseDataConverter');
 const connection = require('../database/connection');
 import passwordHash from 'password-hash';
@@ -239,6 +240,61 @@ const confirmFriendship = async (req: Request, res: Response) => {
     }
 };
 
+const downloadProgress = async (req: Request, res: Response) => {
+    const { exerciseProgressId } = req.body;
+    try {
+        const progress: any = await userRepository.getProgressForSpecificExercise(parseInt(exerciseProgressId.toString()));
+
+        if (progress && progress.length > 0) {
+            let responseData = [];
+            for (let i = 0; i < progress.length; i++) {
+                let el = Object.assign({}, progress[i]);
+                el.date = progress[i].date.toISOString().split('T')[0];
+
+                delete el.id;
+                delete el.user_exercise_id;
+
+                responseData.push(el);
+            };
+
+            const fields = [
+                {
+                    label: 'Date',
+                    value: 'date'
+                },
+                {
+                    label: 'Sets',
+                    value: 'sets'
+                },
+                {
+                    label: 'Reps',
+                    value: 'reps'
+                },
+                {
+                    label: 'Weight',
+                    value: 'weight'
+                },
+                {
+                    label: 'Wight unit',
+                    value: 'weight_unit'
+                }
+            ];
+
+            const json2csv = new Parser({ fields });
+            const csv = json2csv.parse(responseData);
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('progress.csv');
+            return res.status(200).send(csv);
+
+        }
+        return res.status(404).json({ error: { message: 'Something went wrong when downloading progress.' } });
+
+    } catch (error) {
+        res.status(404).json({ error });
+    }
+}
+
 export = {
     getUser,
     postUser,
@@ -250,5 +306,6 @@ export = {
     addFriends,
     deleteFriends,
     confirmFriendship,
-    getAllUsers
+    getAllUsers,
+    downloadProgress
 };

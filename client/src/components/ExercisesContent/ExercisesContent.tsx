@@ -55,7 +55,13 @@ function ExercisesContent() {
     const renderExercises = () => {
         if (loggedExercisesExist) {
             const filteredExercises = userExercises.exercises.filter((el: any) => el.exerciseName.toLowerCase().includes(exerciseInput.toLowerCase()));
-            const filteredExerciseCards = filteredExercises.map((elData: any, index: number) => (<ExerciseCard data={elData} key={index} />));
+            const filteredExerciseCards = filteredExercises.map((elData: any, index: number) => {
+                const progress = userExercises.originalExercises.find((el: any) => el.exerciseName === elData.exerciseName);
+                if (progress) {
+                    return (<ExerciseCard data={elData} key={index} exerciseProgressId={progress.exerciseProgressId} />)
+                }
+                return null;
+            });
 
             return filteredExerciseCards;
         } else {

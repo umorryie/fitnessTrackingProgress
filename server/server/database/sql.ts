@@ -123,6 +123,10 @@ const getAllUsers = (id: number): string => {
             select u.email, u.first_name as firstName, u.last_name as lastName from users u where id != ${id}`;
 };
 
+const getProgressForSpecificExercise = (id: number): string => {
+    return `select * from exercise_progress ep where user_exercise_id = (select user_exercise_id from exercise_progress ep2 where id = ${id});`;
+}
+
 export = {
     createSchema,
     selectFitnessSchema,
@@ -145,5 +149,6 @@ export = {
     confirmFriendship,
     getFriendship,
     getFriendshipByMetaData,
-    getAllUsers
+    getAllUsers,
+    getProgressForSpecificExercise
 };

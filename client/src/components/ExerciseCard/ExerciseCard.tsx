@@ -7,7 +7,7 @@ import IDataPoints from '../../interfaces/IDataPoints';
 import { selectUser } from '../../redux/features/user';
 import EditableStats from '../EditableStats/EditableStats';
 import { useSelector, useDispatch } from 'react-redux';
-import { insertProgress } from '../../controllers/UserController';
+import { insertProgress, downloadProgress } from '../../controllers/UserController';
 import { validateExerciseInput } from '../../validations/validateExerciseInput';
 import { handleError } from '../../errorHandler/errorHandler';
 
@@ -37,6 +37,7 @@ function ExerciseCard(data: any) {
     const [addWeightUnit, setAddWeightUnit] = useState('kg');
     const [addDate, setAddDate] = useState(getDate(null));
     const user = useSelector(selectUser);
+    const [exerciseProgressId, setExerciseProgressId] = useState(0);
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
@@ -56,6 +57,7 @@ function ExerciseCard(data: any) {
         setChartOptions(determineChartOptions(options.dataPoints, options.suffix, activeMonthName, activeYearNumber));
         determineNextMonthExistence(monthsLength, yearsLength, years, months);
         determinePreviousMonthExistence(monthsLength, yearsLength);
+        setExerciseProgressId(data.exerciseProgressId)
     }, [data.data]);
     const addInputs = (event: any, target: string) => {
         switch (target) {
@@ -252,7 +254,7 @@ function ExerciseCard(data: any) {
                                     : <div className="monthArrow hidden">{arrowRight}</div>}
                             </div>}
                         <div className="downloadAndAddProgress">
-                            {determineAddElements() ? null : <div className="cursorHover downloadProgress leftPadding">Download progress</div>}
+                            {determineAddElements() ? null : <div className="cursorHover downloadProgress leftPadding" onClick={() => downloadProgress(exerciseProgressId, user.jwt, dispatch)}>Download progress</div>}
                             {determineAddElements() ? null : <div className="cursorHover addProgress whiteColor leftPadding" onClick={() => { toggleAddingProgress(); }}>Add progress{addProgress}</div>}
                         </div>
                     </div>
