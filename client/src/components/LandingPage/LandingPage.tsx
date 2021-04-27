@@ -2,8 +2,6 @@ import './LandingPage.css';
 import { useHistory } from "react-router-dom";
 import { demoLogin } from '../../controllers/UserController';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-const AOS = require('aos');
 
 function LandingPage() {
     const history = useHistory();
@@ -11,10 +9,6 @@ function LandingPage() {
     const navigate = (destination: string) => {
         history.push(destination);
     }
-
-    useEffect(() => {
-        AOS.init({ duration: 1500 });
-    }, []);
     return (
         <div className="landingPage">
             <section id="section1" className="firstPage">
